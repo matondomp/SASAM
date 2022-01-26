@@ -61,11 +61,13 @@ export const Aside:React.FC=()=>{
           <Menu.Item key="1" onClick={()=>hendleChangeTitleActive('negocio')} icon={<PieChartOutlined />}>
             <Link to='/municipe'> Municipes</Link> 
           </Menu.Item>
-          <Menu.Item key="2" onClick={()=>hendleChangeTitleActive('2')} icon={<DesktopOutlined />}>
+      {/*     <Menu.Item key="2" onClick={()=>hendleChangeTitleActive('2')} icon={<DesktopOutlined />}>
             Documento Identificação
-          </Menu.Item>
+          </Menu.Item> */}
               <SubMenu key="negocio" title="Negocio"  icon={<DesktopOutlined />}>
-                    <Menu.Item key="negocio2" onClick={()=>hendleChangeTitleActive('negocio2')}>Solicitações</Menu.Item>
+                    <Menu.Item key="negocio2" onClick={()=>hendleChangeTitleActive('negocio2')}>
+                        <Link to="/solicitacoes">Solicitações</Link>
+                    </Menu.Item>
                     <Menu.Item key="negocio3" onClick={()=>hendleChangeTitleActive('negocio3')}>Histórico</Menu.Item>
             </SubMenu>
 
@@ -123,9 +125,9 @@ export const Aside:React.FC=()=>{
              </SubMenu>
 
              <SubMenu key="sub5" title="Solicitações">
-                    <Menu.Item key="19" onClick={()=>hendleChangeTitleActive('19')}>
+                    {/* <Menu.Item key="19" onClick={()=>hendleChangeTitleActive('19')}>
                         <Link to="/solicitacoes">Listagem</Link>
-                    </Menu.Item>
+                    </Menu.Item> */}
                     
                     <Menu.Item key="20" onClick={()=>hendleChangeTitleActive('20')}>
                         <Link to="/prioridade">Prioridade</Link>

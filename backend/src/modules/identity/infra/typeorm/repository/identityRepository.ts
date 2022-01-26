@@ -25,6 +25,7 @@ export class IdentityRepository implements IIdentity{
         return identity
     }
     public async update(id:string,data:IdentityDTO):Promise<void>{
+        
          await this.identity.update(id,data)
     }
     public async list(id:string):Promise<Identity[]>{
@@ -33,14 +34,18 @@ export class IdentityRepository implements IIdentity{
      
 
        identity= await this.identity.find({
-           relations:['Municipe'],
-           where:{municipe_id:id}
+           relations:['Municipe','User'],
+           where:{municipe_id:id},
+           order: {
+            created_at: "DESC",
+        },
        })
 
        return identity
     }
 
     public async save(data:Identity):Promise<Identity>{
+        console.log('updated==>',data)
         const identity=await this.identity.save(data)
 
         return identity

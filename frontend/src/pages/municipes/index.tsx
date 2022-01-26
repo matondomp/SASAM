@@ -57,8 +57,13 @@ export const Municipe: FC = () => {
   const [isEdit,seIsEdit]=useState(false)
   const [id, setId] = useState('')
   const [forms] = Form.useForm();
+  const [_forms] = Form.useForm();
+  let user: any = localStorage.getItem("@sasam-app:user") 
 
+   user= user && JSON.parse(String(user))
+  
   useEffect(()=>{
+     
     getMunicipio()
     getTypeMunicipe()
     getEstadoCivil()
@@ -95,16 +100,46 @@ export const Municipe: FC = () => {
    
    }
 
+   function clearInput(){
+
+    _forms.setFieldsValue({
+     numero_identificacao:null,
+     tipo_identificacao:null,
+    /*  data_emissao:identidade[item.key]?.data_emissao,
+     data_validade:identidade[item.key]?.data_validade, */
+     estado_id: null,
+    });
+
+    forms.setFieldsValue({
+      name: null,
+       pai: null,
+      mae:null,
+      residencia: null,
+ /*     date: municipe[item.key]?.data_nascimento, */
+      telefone: null,
+      user_id: null,
+      estado_id: null,
+      bairro_id: null,
+      tipo_municipe:null,
+      genero_id: null,
+      estado_cil_id: null,
+      email:null 
+     });
+
+   }
+
    function initFormIdentifica(item: any) {
     seIsEdit(true)
     console.log("editar",item)
      seIsEdit(true)
-     setMunicipeId(identidade[item.key]?.id)
 
      console.log(identidade)
      setId(identidade[item.key].id)
-     forms.setFieldsValue({
-      name: identidade[item.key]?.name,
+     _forms.setFieldsValue({
+      numero_identificacao:identidade[item.key]?.numero_identificacao,
+      tipo_identificacao:identidade[item.key]?.tipo_identificacao,
+     /*  data_emissao:identidade[item.key]?.data_emissao,
+      data_validade:identidade[item.key]?.data_validade, */
       estado_id: identidade[item.key]?.estado_id,
      });
    
@@ -185,9 +220,14 @@ export const Municipe: FC = () => {
           return {
             key: i,
             id: item.id,
-            estado_id:item?.estado_id?'Activo':'Inactivo',
+            numero_identificacao:item.numero_identificacao,
+            tipo_identificacao:item.tipo_identificacao,
+            data_emissao:item?.data_emissao && hendleDateTimeZone(item?.data_emissao),
+            data_validade: item?.data_validade && hendleDateTimeZone(item?.data_validade ),
+            estado_id:item?.estado_id,
+            estado:item?.estado_id=='1'?'Activo':'Inactivo',
             name: item?.name,
-            data: item?.created_at,
+            data: item?.created_at  && hendleDateTimeZone(item?.created_at),
           }
         }
       )
@@ -273,7 +313,7 @@ export const Municipe: FC = () => {
         duration: 4000,
         isClosable: true,
       })
-
+      getIdentity(municipeId)
       getMunicipio()
     } catch (error) {
       toast({
@@ -324,18 +364,26 @@ export const Municipe: FC = () => {
   async function  handleSubmitIdentidade(data: any) {
 
      if(isEdit){
-      console.log('updated',data,id)
+      console.log('updated',data,id,user)
       let url='/identidade/'
-      handleUpdate(url,{...data,municipe_id:municipeId})
+      handleUpdate(url,{
+             ...data,
+             municipe_id:municipeId
+          })
 
-      getIdentity(municipeId)
+      
        return
     } 
 
-    console.log('municipeId',municipeId)
+    console.log('municipeId',municipeId,'user',user?.id)
 
     try {
-      const response=await api.post("/identidade",{...data,municipe_id:municipeId})
+      const response=await api.post("/identidade",{
+        ...data,
+        municipe_id:
+        municipeId,
+        userId:user?.id
+      })
 
       message.success("Cadastrado com sucesso !")
       toast({
@@ -378,7 +426,7 @@ export const Municipe: FC = () => {
       <section style={{marginBottom:'50px'}}>
         <h1>LISTA DE MUNÍCIPES</h1>
         <div>
-          <Button   onClick={() => {setVisible(true);seIsEdit(false)}} type="primary" shape="round" icon={<PlusOutlined />} >Cadastrar</Button>
+          <Button   onClick={() => {setVisible(true);seIsEdit(false);clearInput()}} type="primary" shape="round" icon={<PlusOutlined />} >Cadastrar</Button>
           <Button type="primary" shape="round" icon={<DownloadOutlined />} >Exportar</Button>
         </div>
       </section>
@@ -398,7 +446,7 @@ export const Municipe: FC = () => {
         visible={visibleDoc}
         onOk={() => setVisibleDoc(false)}
         onCancel={() => setVisibleDoc(false)}
-        width={1000}
+        width={1200}
        >
         <div>
             <section
@@ -412,15 +460,19 @@ export const Municipe: FC = () => {
                  marginBottom:'50px'
                 }}>
 
-            <h1 style={{color:'#1d8efa'}}> Identiificação</h1>
+            <h1 style={{color:'#1d8efa'}}> Identificação</h1>
            
             <div>
            
-              <Button   onClick={() => {setVisibleIdentity(true);seIsEdit(false)}} type="primary" shape="round" icon={<PlusOutlined />} >Cadastrar</Button>
+              <Button   onClick={() => {setVisibleIdentity(true);seIsEdit(false);clearInput()}} type="primary" shape="round" icon={<PlusOutlined />} >Cadastrar</Button>
             </div>
           </section>
           <hr />
-            <Table columns={_column} dataSource={identidade} size="middle" />
+            <Table columns={_column} dataSource={identidade}
+               scroll={{ x: 1500 }}
+               pagination={{ pageSize: 5 }}
+              // size="middle"
+             />
         </div>
        </Modal>
 
@@ -434,27 +486,72 @@ export const Municipe: FC = () => {
        >
 
         {/* overlayClassName="react-modal-overLay" */}
-
+        
          
-          <AdvancedSearchForm hendleSubmit={handleSubmitIdentidade} form={forms}>
+          <AdvancedSearchForm hendleSubmit={handleSubmitIdentidade} form={_forms}>
             <Row gutter={24}>
           
            <Col>
+             
                 <Form.Item
-                  name="name"
-                  label="Nome"
+                  name="numero_identificacao"
+                  label="Numero Identificação"
                   rules={[
                     {
                       required: true,
-                      message: 'digite o nome!',
+                      message: 'digite o Numero de Identificação!',
                     },
                   ]}
                 >
                   <Input />
                 </Form.Item>
+
+                <Form.Item
+                  name="tipo_identificacao"
+                  label="Tipo Identificação"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'digite o Tipo de Identificação!',
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                </Col>
+                <Col>
+                <Form.Item
+                  name="data_emissao"
+                  label="Data de Emissão"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'digite a Data de Emissão!',
+                    },
+                  ]}
+                >
+                  <DatePicker />
+                </Form.Item>
+                
+                <Form.Item
+                  name="data_validade"
+                  label="Data de validade"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'digite a data de validade!',
+                    },
+                  ]}
+                >
+                  <DatePicker />
+                </Form.Item>
               </Col>
 
               <Col>
+
+
+               
+
                 <Form.Item
                   name="estado_id"
                   label="Estado"

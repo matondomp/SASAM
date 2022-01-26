@@ -18,7 +18,11 @@ export class UpdateIdentityService{
            if(!item){
                throw new Error("This Identidade does not exist!")
            }
-           item.name=data.name
+           item.data_emissao=new Date(data.data_emissao)
+           item.data_validade=new Date(data.data_validade)
+           item.numero_identificacao= data.numero_identificacao
+           item.tipo_identificacao=data.tipo_identificacao
+           
            item.estado_id=data.estado_id
            await this.identity.save(item)
 

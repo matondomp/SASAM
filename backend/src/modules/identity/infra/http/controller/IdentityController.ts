@@ -23,16 +23,25 @@ export class IdentityController{
     
       const { 
           name,
+          tipo_identificacao,
           municipe_id,
-          estado_id
+          estado_id,
+          data_emissao,
+          data_validade,
+          numero_identificacao,
+          user_id,
        } = request.body
-       
+      
       const create= container.resolve(CreateIdentityService)
      
       const identity=await create.execute({
-        name,
-        municipe_id,
-        estado_id
+        tipo_identificacao,
+         data_emissao,
+         data_validade,
+         numero_identificacao,
+         user_id,
+         municipe_id,
+         estado_id
       })
 
       return response.json(identity)
@@ -40,10 +49,22 @@ export class IdentityController{
 
     public async update(request:Request,response:Response){
       const { id }=request.params
-      const { name,estado_id,municipe_id } =request.body
-      
+      const { 
+        tipo_identificacao,
+        estado_id,
+        data_emissao,
+        data_validade,
+        numero_identificacao,
+     } = request.body
+     
       const updateService=container.resolve(UpdateIdentityService)
-      const identity=await updateService.execute(id,{name,estado_id,municipe_id})
+      const identity=await updateService.execute(id,{
+        tipo_identificacao,
+        data_emissao,
+        data_validade,
+        numero_identificacao,
+        estado_id
+      })
 
       return response.json(identity)
     }

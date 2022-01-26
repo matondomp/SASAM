@@ -25,6 +25,10 @@ import {
 //import Modal from 'react-modal';
 import { useToast } from '@chakra-ui/react'
 
+import { Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
+
+
 import { api } from '../../service/api'
 
 import { DashBord } from '../dashbord'
@@ -40,7 +44,9 @@ import { FilterValue } from 'antd/lib/table/interface';
 
 import { Input } from './style'
 import { hendleDateTimeZone } from '../../prividers/timezone/timeZoneLocal';
+import { UploadFile } from 'antd/lib/upload/interface';
 
+const { Option } = Select;
 
 export const Solicitacao: FC = () => {
 
@@ -64,6 +70,17 @@ export const Solicitacao: FC = () => {
   let descriptionRef:any=useRef() 
   let slaRef:any=useRef() 
   let estadoRef:any=useRef() 
+
+  const [fileList, setFileList] = useState<UploadFile<any>[]>([
+    {
+      uid: '-1',
+      name: '',
+      status: 'done',
+     // url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    }
+  ]);
+
+
 
 function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
         const {name,value}=event.target
@@ -152,6 +169,25 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
   const handleTableChange = (filters: any) => {
     console.log(filters)
   }
+
+  const onChange = (fileList:any) => {
+    setFileList(fileList.fileList);
+  };
+
+  const onPreview = async (file:any) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    let imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
 
   const getSolicitacoes = useCallback(async () => {
     setSolicitacoes([])
@@ -266,12 +302,38 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
         onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
         okText="Regitrar"
-        width={400}
+        width={520}
       >
         <AdvancedSearchForm hendleSubmit={handleSubmit}  form={forms} >
           <Row gutter={24} style={{width:'100%'}}>
 
             <Col>
+            <Form.Item
+                  name="identificacao"
+                  label="Municipe"
+                  rules={[{ required: true, message: 'digite nº do  BI!' }]}
+                >
+            <Select
+                showSearch
+                style={{ width: 200 }}
+                placeholder="Pesquisar municipe via BI"
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+                filterSort={(optionA, optionB) =>
+                  optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                }
+              >
+                <Option value="1">Not Identified</Option>
+                <Option value="2">Closed</Option>
+                <Option value="3">Communicated</Option>
+                <Option value="4">Identified</Option>
+                <Option value="5">Resolved</Option>
+                <Option value="6">Cancelled</Option>
+              </Select>
+              </Form.Item>
+
               <Form.Item
                 name="description"
                 label="Nome"
@@ -287,27 +349,8 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                 <Input style={{ width: '100%' }}  
                 onChange={henderInputChanges}  />
               </Form.Item>
-            </Col>
 
-            <Col>
               <Form.Item
-                name="sla"
-                label="Sla"
-                initialValue={form.sla}
-                style={{width:'100%'}}
-                rules={[
-                  {
-                    required: true,
-                    message: 'digite o sla!',
-                  },
-                ]}
-              >
-                <Input style={{ width: '100%' }}    />
-              </Form.Item>
-            </Col>
-
-            <Col style={{width:'100%'}}>
-                <Form.Item
                   name="estado_id"
                   label="Estado"
                   rules={[{ required: true, message: 'digite nome da Estado!' }]}
@@ -324,6 +367,83 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
 
                   </Select>
                 </Form.Item>
+            </Col>
+
+            <Col>
+              <Form.Item
+                name="identificacao"
+                label="Identificação(BI)"
+                initialValue={form.sla}
+                style={{width:'100%'}}
+                rules={[
+                  {
+                    required: true,
+                    message: 'digite a Identificação!',
+                  },
+                ]}
+              >
+                <Input style={{ width: '100%' }}    />
+              </Form.Item>
+
+              <Form.Item
+                name="telefone"
+                label="Telefone"
+                initialValue={form.sla}
+                style={{width:'100%'}}
+                rules={[
+                  {
+                    required: true,
+                    message: 'digite a Telefone!',
+                  },
+                ]}
+              >
+                <Input style={{ width: '100%' }}    />
+              </Form.Item>
+
+              <Form.Item
+                name="tipo_solicitacao"
+                label="Tipo de solicitação"
+                initialValue={form.sla}
+                style={{width:'100%'}}
+                rules={[
+                  {
+                    required: true,
+                    message: 'digite o Tipo de solicitação!',
+                  },
+                ]}
+              >
+                <Input style={{ width: '100%' }}    />
+              </Form.Item>
+            </Col>
+
+            <Col style={{width:'100%'}}>
+              
+
+                <Form.Item
+                name="anexo"
+                label="Anexo"
+                initialValue={form.sla}
+                style={{width:'100%'}}
+                rules={[
+                  {
+                    required: true,
+                    message: 'digite Anexo!',
+                  },
+                ]}
+              >
+               <ImgCrop rotate>
+                  <Upload
+                   // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onChange={onChange}
+                    onPreview={onPreview}
+                  >
+                    {fileList.length < 5 && '+ Upload'}
+                  </Upload>
+              </ImgCrop>
+              </Form.Item>
+
               </Col>
 
 
