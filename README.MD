@@ -1,4 +1,4 @@
-# BEMOBILE INTERVIWER
+# SASAM CADASTRO DE MUNICIPES
 
  <hr />
  <p>
@@ -10,7 +10,7 @@
  </h1>
  <ul>
    <li>Express.JS</li>
-   <li>Postgres</li>
+   <li>Postgres SQL</li>
    <li>JSON</li>
    <li>Typeorm</li>
    <li>React.js</li>
