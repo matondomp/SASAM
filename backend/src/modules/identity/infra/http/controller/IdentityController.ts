@@ -11,6 +11,7 @@ interface IFilter{
 
 export class IdentityController{
 
+
   public async index(request:Request,response:Response):Promise<Response>{
     const { filter }=request.body
     const { id }=request.params
@@ -18,7 +19,15 @@ export class IdentityController{
     const getDistrit= await repository.list(id)
     return response.json(getDistrit)
   }
-   
+   public async show(request:Request,response:Response):Promise<Response>{
+
+     const { filter }=request.body
+     const repository=new IdentityRepository()
+     const getDistrit= await repository.listByIdentity(filter)
+
+     return response.json(getDistrit)
+
+   }
     public async create(request:Request,response:Response):Promise<Response>{
     
       const { 

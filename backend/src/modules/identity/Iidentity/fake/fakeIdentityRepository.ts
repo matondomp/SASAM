@@ -23,6 +23,11 @@ export class IFakeIdentityRepository implements IIdentity{
         return this.listIdentity
     }
 
+    public async listByIdentity(id:string):Promise<Identity[]>{
+        return this.listIdentity.find((item:any)=>item.id==id)
+    }
+    
+
     public async save(data:Identity):Promise<Identity>{
 
         this.listIdentity.push(data)

@@ -40,7 +40,14 @@ export const AdvancedSearchForm:FC<Ifilds> = ({ hendleSubmit, children,ref,form 
       className="ant-advanced-search-form"
       onFinish={hendleSubmit}
       ref={ref}
+
+      style={{
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center'
+      }}
     >
+      <div>
      { children }
       <Row>
         <Col span={24} style={{ textAlign: 'right' }}>
@@ -65,6 +72,8 @@ export const AdvancedSearchForm:FC<Ifilds> = ({ hendleSubmit, children,ref,form 
           </a>
         </Col>
       </Row>
+
+      </div>
     </Form>
   );
 };

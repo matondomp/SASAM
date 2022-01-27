@@ -38,7 +38,6 @@ export class MunicipeRepository implements Imunicipe{
        return municipes
     }
 
-
     public async save(data:Municipe):Promise<Municipe>{
         const municipes=await this.municipes.save(data)
 

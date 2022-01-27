@@ -6,5 +6,6 @@ export interface IIdentity{
     findById(id:string):Promise<Identity | undefined>
     update(id:string,date:IdentityDTO):Promise<void>
     list(filter:string):Promise<Identity[]>
+    listByIdentity(id:string):Promise<Identity[]>
     save(data:Identity):Promise<Identity>
 }

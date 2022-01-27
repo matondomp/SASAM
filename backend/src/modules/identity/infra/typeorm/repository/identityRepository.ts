@@ -37,12 +37,29 @@ export class IdentityRepository implements IIdentity{
            relations:['Municipe','User'],
            where:{municipe_id:id},
            order: {
-            created_at: "DESC",
-        },
+             created_at: "DESC",
+            },
        })
 
        return identity
     }
+
+
+    public async listByIdentity(numero_identificacao:string):Promise<Identity[]>{
+        const identity= await this.identity.find({
+            relations:[
+                'Municipe'
+             ],
+             order: {
+                created_at: "DESC",
+             }, 
+             where:{
+                 numero_identificacao: Like(`%${numero_identificacao}%`)
+             }
+          
+        })
+        return identity
+     }
 
     public async save(data:Identity):Promise<Identity>{
         console.log('updated==>',data)

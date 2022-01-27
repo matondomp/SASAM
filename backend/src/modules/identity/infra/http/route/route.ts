@@ -8,6 +8,7 @@ const route=Router()
 
 route.post("/",identityController.create)
 route.post("/list/:id",identityController.index)
+route.post("/listByIdentity",identityController.show)
 route.put("/:id",identityController.update)
 
 export { route as identityRoute }

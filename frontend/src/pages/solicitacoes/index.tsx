@@ -19,7 +19,8 @@ import {
 
 import {
   DownloadOutlined,
-  PlusOutlined
+  PlusOutlined,
+  UploadOutlined
 } from '@ant-design/icons';
 
 //import Modal from 'react-modal';
@@ -64,6 +65,7 @@ export const Solicitacao: FC = () => {
   const [provincia, setProvincia] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [visible, setVisible] = useState(false);
+  const [identidade,setIdentidade]=useState<any[]>([])
   const toast = useToast()
   const { inputSearchValue } = UseSearchContext()
   let formRef:any=useRef()
@@ -173,7 +175,10 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
   const onChange = (fileList:any) => {
     setFileList(fileList.fileList);
   };
-
+  function onSearch(val:any) {
+    getIdentity(val)
+    console.log('search:', val);
+  }
   const onPreview = async (file:any) => {
     let src = file.url;
     if (!src) {
@@ -204,6 +209,34 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
             estado_id:item?.estado_id,
             sla: item?.sla,
             data: hendleDateTimeZone(item?.created_at),
+          }
+        }
+      )
+      )
+    )
+    setLoading(false)
+
+  }, [])
+
+  const getIdentity = useCallback(async (identidade:string) => {
+   // setTypeMunicipe([])
+
+    const response = await api.post(`/identidade/listByIdentity`,{ filter:identidade})
+    const { data } = response
+
+    setIdentidade(() => (data.map((item: any, i: number) => {
+          console.log(i)
+          return {
+            key: i,
+            id: item.id,
+            numero_identificacao:item.numero_identificacao,
+            tipo_identificacao:item.tipo_identificacao,
+            data_emissao:item?.data_emissao && hendleDateTimeZone(item?.data_emissao),
+            data_validade: item?.data_validade && hendleDateTimeZone(item?.data_validade ),
+            estado_id:item?.estado_id,
+            estado:item?.estado_id=='1'?'Activo':'Inactivo',
+            name: item?.name,
+            data: item?.created_at  && hendleDateTimeZone(item?.created_at),
           }
         }
       )
@@ -304,33 +337,39 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
         okText="Regitrar"
         width={520}
       >
-        <AdvancedSearchForm hendleSubmit={handleSubmit}  form={forms} >
+        <AdvancedSearchForm hendleSubmit={handleSubmit}  
+           form={forms} >
           <Row gutter={24} style={{width:'100%'}}>
 
-            <Col>
+            <Col style={{width:'50%'}}>
             <Form.Item
                   name="identificacao"
                   label="Municipe"
+                  style={{width:'100%'}}
                   rules={[{ required: true, message: 'digite nº do  BI!' }]}
                 >
             <Select
                 showSearch
-                style={{ width: 200 }}
-                placeholder="Pesquisar municipe via BI"
+                style={{ width: '100%' }}
+                placeholder="Select a person"
                 optionFilterProp="children"
-                filterOption={(input, option) =>
-                  option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }
-                filterSort={(optionA, optionB) =>
-                  optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                onChange={onChange}
+                onSearch={onSearch}
+                filterOption={(input, option:any) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
               >
-                <Option value="1">Not Identified</Option>
-                <Option value="2">Closed</Option>
-                <Option value="3">Communicated</Option>
-                <Option value="4">Identified</Option>
-                <Option value="5">Resolved</Option>
-                <Option value="6">Cancelled</Option>
+                {
+                  identidade.map((identity:any)=>(
+                    <Option value={identity.id} key={identity.id}>
+                      { 
+                        identity.name
+                      }
+                    </Option>
+                  )
+                  )
+                }
+               
               </Select>
               </Form.Item>
 
@@ -353,9 +392,10 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
               <Form.Item
                   name="estado_id"
                   label="Estado"
+                  style={{width:'100%'}}
                   rules={[{ required: true, message: 'digite nome da Estado!' }]}
                 >
-                  <Select defaultValue="Selectione" style={{ width: 200, }} value={form.estado_id} onChange={henderSelectChanges}  >
+                  <Select defaultValue="Selectione" style={{ width: '100%', }} value={form.estado_id} onChange={henderSelectChanges}  >
                     <Option value="null" >Selectione</Option>
                     {
                       estado.map(estado=>(
@@ -369,7 +409,7 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                 </Form.Item>
             </Col>
 
-            <Col>
+            <Col style={{width:'50%'}}>
               <Form.Item
                 name="identificacao"
                 label="Identificação(BI)"
@@ -431,17 +471,15 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                   },
                 ]}
               >
-               <ImgCrop rotate>
-                  <Upload
-                   // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onChange={onChange}
-                    onPreview={onPreview}
-                  >
-                    {fileList.length < 5 && '+ Upload'}
-                  </Upload>
-              </ImgCrop>
+             
+              <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture"
+                 // defaultFileList={[...fileList]}
+                  className="upload-list-inline"
+                >
+                 <Button icon={<UploadOutlined />}>Anexar Ficheiro</Button>
+               </Upload>
               </Form.Item>
 
               </Col>
