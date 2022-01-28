@@ -14,7 +14,7 @@ export class alterEstados1641863316886 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropColumn("estados","estado_id")
+       // await queryRunner.dropColumn("estados","estado_id")
     }
 
 }

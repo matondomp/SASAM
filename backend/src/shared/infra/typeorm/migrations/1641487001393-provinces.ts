@@ -16,7 +16,7 @@ export class provinces1641487001393 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("provinces","estateForeignKey")
+        //await queryRunner.dropForeignKey("provinces","estateForeignKey")
     }
 
 

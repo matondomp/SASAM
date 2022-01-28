@@ -44,7 +44,7 @@ export class perfils1642338435449 implements MigrationInterface {
      }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("perfils")
+        //await queryRunner.dropTable("perfils")
     }
 
 }

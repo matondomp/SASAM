@@ -19,7 +19,7 @@ export class UpdateStateService{
                throw new Error("This state does not exist!")
            }
            item.name=data.name
-           item.estado_id=data.estado_id
+           //item.estado_id=data.estado_id
            await this.state.save(item)
 
          return item

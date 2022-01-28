@@ -62,7 +62,7 @@ export class identidades1642002742186 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("identidades")
+     //   await queryRunner.dropTable("identidades")
         await queryRunner.dropForeignKey("identidades","identidadeMunicipeForeignKey")
     }
 }

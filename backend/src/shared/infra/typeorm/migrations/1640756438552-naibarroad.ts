@@ -62,7 +62,7 @@ export class naibarroad1640756438552 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("bairros")
+        //await queryRunner.dropTable("bairros")
     }
 
 }

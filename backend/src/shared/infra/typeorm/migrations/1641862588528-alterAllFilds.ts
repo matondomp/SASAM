@@ -64,6 +64,28 @@ export class alterAllFilds1641862588528 implements MigrationInterface {
             })
         
         )
+
+    /*     await queryRunner.createForeignKey("distritos",
+        new TableForeignKey({
+            name: "estateForeignKey",
+            columnNames: ["estado_id"],
+            referencedColumnNames: ["id"],
+            referencedTableName: "estados",
+            onDelete: "SET NULL",
+            onUpdate: "CASCADE"
+        })
+       )
+       
+         await queryRunner.createForeignKey("solicitacaos",
+             new TableForeignKey({
+                        name:"estateForeignKey",
+                        columnNames:["estado_id"],
+                        referencedColumnNames:["id"],
+                        referencedTableName:"estados",
+                        onDelete:"SET NULL",
+                        onUpdate:"CASCADE"
+                    })
+                )  */
      
     }
 
@@ -72,7 +94,7 @@ export class alterAllFilds1641862588528 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
 
-        await queryRunner.createForeignKey("distritos",
+/*          await queryRunner.createForeignKey("distritos",
         new TableForeignKey({
             name: "municipioForeignKey",
             columnNames: ["municipio_id"],
@@ -126,9 +148,9 @@ export class alterAllFilds1641862588528 implements MigrationInterface {
             onDelete: "SET NULL",
             onUpdate: "CASCADE"
         })
-    )
+    )  */
           
-     
+
     }
 
 }

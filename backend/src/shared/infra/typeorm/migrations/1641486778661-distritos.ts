@@ -24,7 +24,7 @@ export class distritos1641485040035 implements MigrationInterface {
             onUpdate: "CASCADE"
         })
     )
-        await queryRunner.createForeignKey("distritos",
+     /*    await queryRunner.createForeignKey("distritos",
             new TableForeignKey({
                 name: "estateForeignKey",
                 columnNames: ["estado_id"],
@@ -33,12 +33,12 @@ export class distritos1641485040035 implements MigrationInterface {
                 onDelete: "SET NULL",
                 onUpdate: "CASCADE"
             })
-        )
+        ) */
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("distritos","estateForeignKey")
-        await queryRunner.dropForeignKey("distritos","provinceForeignKey")
+      /*   await queryRunner.dropForeignKey("distritos","estateForeignKey")
+        await queryRunner.dropForeignKey("distritos","provinceForeignKey") */
     }
 
 }

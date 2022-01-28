@@ -39,7 +39,7 @@ export class estados1641486093490 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-         await queryRunner.dropTable("estados")
+        // await queryRunner.dropTable("estados")
     }
 
 }

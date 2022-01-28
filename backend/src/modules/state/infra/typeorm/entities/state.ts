@@ -15,9 +15,6 @@ export class State{
     @Column()
     name!:string
 
-   /*  @Column()
-    estado_id!:string */
-   
     @CreateDateColumn()
     created_at!:Date
 

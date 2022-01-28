@@ -52,14 +52,14 @@ export class identidades1643148914806 implements MigrationInterface {
             {
                 name: "name",
                 type: "varchar",
-                isUnique: false
+                isUnique: false,
+                isNullable:true
             },
         ) )
         await queryRunner.dropColumn('identidades','numero_identificacao')
-        await queryRunner.dropColumn('identidades','user_id')
+        await queryRunner.dropColumn('identidades','userId')
         await queryRunner.dropColumn('identidades','data_emissao')
         await queryRunner.dropColumn('identidades','data_validade')
-        await queryRunner.dropForeignKey('identidades','userIdentidadeForeignKey')
 
     }
 

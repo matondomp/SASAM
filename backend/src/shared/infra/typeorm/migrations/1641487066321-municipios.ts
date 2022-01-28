@@ -26,9 +26,9 @@ export class municipios1641487066321 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("municipios","estateForeignKey")
+     /*    await queryRunner.dropForeignKey("municipios","estateForeignKey")
         await queryRunner.dropForeignKey("municipios","provinceForeignKey")
-        await queryRunner.dropForeignKey("municipios","municipioForeignKey")
+        await queryRunner.dropForeignKey("municipios","municipioForeignKey") */
     }
 
 

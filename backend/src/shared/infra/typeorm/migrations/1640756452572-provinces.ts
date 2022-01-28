@@ -46,6 +46,6 @@ export class provinces1640756452572 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-         await queryRunner.dropTable("provinces")
+       //  await queryRunner.dropTable("provinces")
     }
 }

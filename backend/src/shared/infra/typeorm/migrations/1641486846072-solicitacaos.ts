@@ -39,8 +39,8 @@ export class solicitacaos1641481941699 implements MigrationInterface {
                 ]
 
             }) 
-        ),
-        await queryRunner.createForeignKey("solicitacaos",
+        )
+      /* ,  await queryRunner.createForeignKey("solicitacaos",
          new TableForeignKey({
                     name:"estateForeignKey",
                     columnNames:["estado_id"],
@@ -49,14 +49,14 @@ export class solicitacaos1641481941699 implements MigrationInterface {
                     onDelete:"SET NULL",
                     onUpdate:"CASCADE"
                 })
-            )
+            ) */
 
    }
 
     
     public async down(queryRunner: QueryRunner): Promise<void> {
-         await queryRunner.dropTable("solicitacaos")
-         await queryRunner.dropForeignKey("solicitacaos","estateForeignKey")
+      /*   await queryRunner.dropTable("solicitacaos")
+        await queryRunner.dropForeignKey("solicitacaos","estateForeignKey") */
     }
 
 }

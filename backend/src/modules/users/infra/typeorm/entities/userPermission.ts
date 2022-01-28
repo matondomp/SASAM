@@ -10,8 +10,8 @@ import {
 
  import { Permission } from '../../../../permission/infra/typeorm/entities/permission'
  //users_permission_permissaes
-@Entity("users_permissoes_permissaes")
-export class UserPermissoes{
+@Entity("users_permission_permissaes")
+export class usersPermissoesPermissaes{
 
 @PrimaryGeneratedColumn('uuid')
 id!:string

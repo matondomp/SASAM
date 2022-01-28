@@ -9,7 +9,8 @@ export class bairros1641568060772 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-   
+      
+      
     }
 
 }

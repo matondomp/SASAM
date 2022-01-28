@@ -45,11 +45,11 @@ export class bairros1641487033101 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("bairros","estateForeignKey")
+   /*      await queryRunner.dropForeignKey("bairros","estateForeignKey")
         await queryRunner.dropForeignKey("bairros","provinceForeignKey")
         await queryRunner.dropForeignKey("bairros","municipioForeignKey")
         await queryRunner.dropForeignKey("bairros","distritoForeignKey")
-        
+         */
     }
 
 

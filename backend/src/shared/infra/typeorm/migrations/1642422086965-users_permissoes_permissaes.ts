@@ -5,7 +5,7 @@ export class usersPermissoesPermissaes1642422086965 implements MigrationInterfac
     public async up(queryRunner: QueryRunner): Promise<void> {
 
         await queryRunner.createTable(new Table({
-            name:"users_permissoes_permissaes",
+            name:"users_permission_permissaes",
             columns:[
                 {
                     name: "permissaeId",
@@ -21,7 +21,7 @@ export class usersPermissoesPermissaes1642422086965 implements MigrationInterfac
         }))
      
 
-        await queryRunner.createForeignKey("users_permissoes_permissaes",
+        await queryRunner.createForeignKey("users_permission_permissaes",
         new TableForeignKey({
             name: "permissoesUserForeignKey",
             columnNames: ["permissaeId"],
@@ -32,7 +32,7 @@ export class usersPermissoesPermissaes1642422086965 implements MigrationInterfac
         })
       )
 
-      await queryRunner.createForeignKey("users_permissoes_permissaes",
+      await queryRunner.createForeignKey("users_permission_permissaes",
       new TableForeignKey({
           name: "userPermissoesForeignKey",
           columnNames: ["userId"],
@@ -46,9 +46,9 @@ export class usersPermissoesPermissaes1642422086965 implements MigrationInterfac
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("users_permissoes_permissaes")
-        await queryRunner.dropForeignKey("users_permissoes_permissaes","permissoesUserForeignKey")
-        await queryRunner.dropForeignKey("users_permissoes_permissaes","userPermissoesForeignKey")
+     //   await queryRunner.dropTable("users_permission_permissaes")
+        await queryRunner.dropForeignKey("users_permission_permissaes","permissoesUserForeignKey")
+        await queryRunner.dropForeignKey("users_permission_permissaes","userPermissoesForeignKey")
     }
 
 }

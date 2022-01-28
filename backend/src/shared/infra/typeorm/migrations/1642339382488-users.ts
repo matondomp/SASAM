@@ -63,21 +63,12 @@ export class users1642337751807 implements MigrationInterface {
             })
         )
 
-        await queryRunner.createForeignKey("users",
-        new TableForeignKey({
-            name: "userPerfilForeignKey",
-            columnNames: ["perfil_id"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "perfils",
-            onDelete: "SET NULL",
-            onUpdate: "CASCADE"
-         })
-       )
+   
      }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("users")
-        await queryRunner.dropForeignKey("users","perfil_id")
+       // await queryRunner.dropTable("users")
+     
     }
 
 }

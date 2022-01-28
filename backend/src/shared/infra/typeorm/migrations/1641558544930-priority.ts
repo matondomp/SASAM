@@ -59,7 +59,7 @@ export class priority1641558544930 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-         await queryRunner.dropTable("priority")
+        // await queryRunner.dropTable("priority")
     }
 
 }
