@@ -4,10 +4,11 @@
     "port":5438,
     "username":"postgres",
     "password":"123",
-    "database":"sasam",
+    "database":"sasam1",
     "entities":[
         "./src/modules/**/infra/typeorm/entities/*.ts"
     ],
+    "seeds": ["src/modules/**/seeds/*.ts"],
     "migrations":[
         "./src/shared/infra/typeorm/migrations/*.ts"
     ],
