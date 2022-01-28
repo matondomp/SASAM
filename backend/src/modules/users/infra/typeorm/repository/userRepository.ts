@@ -2,19 +2,19 @@ import { getConnection, getRepository, InsertResult, Like, Not, Repository } fro
 import { UserDTO } from '../../../dto/IuserDTO'
 import { IUsers  } from '../../../Iuser/Iuser'
 import { User } from '../entities/user'
-import { UserPermissoes } from '../entities/userPermission'
+import { usersPermissoesPermissaes } from '../entities/userPermission'
 
 export class UserRepository implements IUsers{
     
     private user:Repository<User>
-    private userPermissoes:Repository<UserPermissoes>
+    private userPermissoes:Repository<usersPermissoesPermissaes>
 
     constructor(
        
     ){
         this.user=getRepository(User)
         
-        this.userPermissoes=getRepository(UserPermissoes)
+        this.userPermissoes=getRepository(usersPermissoesPermissaes)
     }
 
     public async create(data:UserDTO):Promise<User>{
@@ -25,7 +25,7 @@ export class UserRepository implements IUsers{
        return user
     }
 
-    public async createWithPermission(data:UserPermissoes[] | UserPermissoes):Promise<InsertResult | any>{
+    public async createWithPermission(data:usersPermissoesPermissaes[] | usersPermissoesPermissaes):Promise<InsertResult | any>{
 
         let itemToBeDeleted=[]
         let user=null
@@ -33,12 +33,12 @@ export class UserRepository implements IUsers{
 
         if(Array.isArray(data)){
             for (const item of data) {
-                let loadedPosts:any = await getRepository(UserPermissoes).findOne({
+                let loadedPosts:any = await getRepository(usersPermissoesPermissaes).findOne({
                    userId:item.userId,
                });
              
                if(loadedPosts){
-                   await getRepository(UserPermissoes)
+                   await getRepository(usersPermissoesPermissaes)
                            .delete({userId:loadedPosts.userId})
                    itemToBeDeleted.push(loadedPosts.id)
                }
@@ -46,19 +46,19 @@ export class UserRepository implements IUsers{
                
                 user= await getConnection().createQueryBuilder()
                                            .insert()
-                                           .into(UserPermissoes)
+                                           .into(usersPermissoesPermissaes)
                                            .values(data)
                                            .execute();
          
            return user
         }
      
-            await getRepository(UserPermissoes)
+            await getRepository(usersPermissoesPermissaes)
             .delete({userId:data.userId})
         
      }
 
-     public async findPermissioByUserId(id:string):Promise<UserPermissoes[] | undefined>{
+     public async findPermissioByUserId(id:string):Promise<usersPermissoesPermissaes[] | undefined>{
         const Permissoes=await this.userPermissoes.find({
             where:{ userId:id }
         })
