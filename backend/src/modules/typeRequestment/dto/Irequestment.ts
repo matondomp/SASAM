@@ -1,11 +1,6 @@
 export interface IrequestmentDTO{
    
-    description:string
-
-  
+    name:string
     estado_id:string
-
-  
-    sla:string
 
 }

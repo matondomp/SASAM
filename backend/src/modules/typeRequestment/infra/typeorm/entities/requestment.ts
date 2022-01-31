@@ -6,23 +6,17 @@ import {
     UpdateDateColumn
   } from 'typeorm'
 
-@Entity("solicitacaos")
+@Entity("tipo_solicitacoes")
 export class Requestment{
     
     @PrimaryGeneratedColumn('uuid')
     id!:string
 
     @Column()
-    description!:string
+    name!:string
 
     @Column()
     estado_id!:string
-
-    @Column()
-    sla!:string
-
-    @Column()
-    user_id!:string
    
     @CreateDateColumn()
     created_at!:Date

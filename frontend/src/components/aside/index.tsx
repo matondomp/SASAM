@@ -125,9 +125,9 @@ export const Aside:React.FC=()=>{
              </SubMenu>
 
              <SubMenu key="sub5" title="Solicitações">
-                    {/* <Menu.Item key="19" onClick={()=>hendleChangeTitleActive('19')}>
-                        <Link to="/solicitacoes">Listagem</Link>
-                    </Menu.Item> */}
+                   <Menu.Item key="19" onClick={()=>hendleChangeTitleActive('19')}>
+                        <Link to="/tipoSolicitacoes">Tipo de solicitação</Link>
+                    </Menu.Item> 
                     
                     <Menu.Item key="20" onClick={()=>hendleChangeTitleActive('20')}>
                         <Link to="/prioridade">Prioridade</Link>

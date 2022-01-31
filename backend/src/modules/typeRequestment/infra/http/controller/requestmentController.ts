@@ -1,6 +1,6 @@
 import { container } from 'tsyringe'
 import { Request,Response } from 'express'
-import { RequestmentRepository } from '../../typeorm/repository/requestmentRepository'
+import { TypeRequestmentRepository } from '../../typeorm/repository/requestmentRepository'
 
 import { CreateRequestmentService } from '../../../service/createRequestmentService'
 import { UpdateRequestmentService } from '../../../service/updateRequestmentService'
@@ -14,7 +14,7 @@ export class RequestController{
   public async index(request:Request,response:Response):Promise<Response>{
     const { filter }:IFilter=request.body
     console.log("1",filter,request.body)
-    const repository=new RequestmentRepository()
+    const repository=new TypeRequestmentRepository()
     const getRequestment= await repository.list(filter)
     return response.json(getRequestment)
   }
@@ -22,17 +22,15 @@ export class RequestController{
     public async create(request:Request,response:Response):Promise<Response>{
     
       const { 
-          description,
+          name,
           estado_id,
-          sla
        } = request.body
-       console.log(description,sla)
+       console.log(name,estado_id)
       const requestment= container.resolve(CreateRequestmentService)
      
       const data=await requestment.execute({
-        sla,
         estado_id,
-        description,
+        name,
         
       })
 
@@ -44,10 +42,10 @@ export class RequestController{
      */
      public async update(request:Request,response:Response){
       const { id }=request.params
-      const { description, estado_id, sla } =request.body
+      const { name, estado_id } =request.body
   
       const updateService=container.resolve(UpdateRequestmentService)
-      const state=await updateService.execute(id,{ description, estado_id, sla })
+      const state=await updateService.execute(id,{ name, estado_id })
 
       return response.json(state)
     }

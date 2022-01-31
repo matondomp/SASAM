@@ -1,11 +1,8 @@
 export interface IrequestmentDTO{
-   
-    description:string
-
-  
-    estado_id:string
-
-  
-    sla:string
+    name:string,
+    estado_id:string,
+    numero_identificacao:string,
+    telefone:string,
+    tipo_solicitacao_id:string
 
 }

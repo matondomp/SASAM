@@ -1,9 +1,9 @@
 import { container } from 'tsyringe'
 import { Request,Response } from 'express'
-import { RequestmentRepository } from '../../typeorm/repository/requestmentRepository'
+import { HistoryRequestmentRepository } from '../../typeorm/repository/historyRequestmentRepository'
 
-import { CreateRequestmentService } from '../../../service/createRequestmentService'
-import { UpdateRequestmentService } from '../../../service/updateRequestmentService'
+import { CreateHistoryRequestmentService } from '../../../service/createHistoryRequestmentService'
+import { UpdateHistoryRequestmentService } from '../../../service/updateHistoryRequestmentService'
 
 interface IFilter{
    filter:string
@@ -13,30 +13,29 @@ export class RequestController{
 
   public async index(request:Request,response:Response):Promise<Response>{
     const { filter }:IFilter=request.body
+    const { id }= request.params
     console.log("1",filter,request.body)
-    const repository=new RequestmentRepository()
-    const getRequestment= await repository.list(filter)
+    const repository=new HistoryRequestmentRepository()
+    const getRequestment= await repository.list(id)
     return response.json(getRequestment)
   }
    
     public async create(request:Request,response:Response):Promise<Response>{
     
       const { 
-        name,
+        description,
         estado_id,
-        numero_identificacao,
-        telefone,
-        tipo_solicitacao_id
+        user_id,
+        solicitacao_id
        } = request.body
        console.log(request.body)
-      const requestment= container.resolve(CreateRequestmentService)
+      const requestment= container.resolve(CreateHistoryRequestmentService)
      
       const data=await requestment.execute({
-        name,
+        user_id,
         estado_id,
-        numero_identificacao,
-        telefone,
-        tipo_solicitacao_id
+        description,
+        solicitacao_id
       })
 
       return response.json(data)
@@ -48,20 +47,18 @@ export class RequestController{
      public async update(request:Request,response:Response){
       const { id }=request.params
       const { 
-        name,
+        description,
         estado_id,
-        numero_identificacao,
-        telefone,
-        tipo_solicitacao_id
+        user_id,
+        solicitacao_id
        } =request.body
   
-      const updateService=container.resolve(UpdateRequestmentService)
+      const updateService=container.resolve(UpdateHistoryRequestmentService)
       const state=await updateService.execute(id,{ 
-        name,
+        description,
         estado_id,
-        numero_identificacao,
-        telefone,
-        tipo_solicitacao_id
+        user_id,
+        solicitacao_id
        })
 
       return response.json(state)

@@ -40,6 +40,11 @@ import { PerfilRepository } from '../../modules/perfil/infra/typeorm/repository/
 import { IPermission } from '../../modules/permission/Ipermission/Ipermission'
 import { PermissionRepository } from '../../modules/permission/infra/typeorm/repository/permissionRepository'
 
+import { TypeRequestmentRepository } from '../../modules/typeRequestment/infra/typeorm/repository/requestmentRepository'
+import { TypeIrequestement } from '../../modules/typeRequestment/Irequestment/Irequestment'
+import { HistoryRequestmentRepository } from '../../modules/requestmentHistorico/infra/typeorm/repository/historyRequestmentRepository'
+import { IHistoryRequestement } from '../../modules/requestmentHistorico/Irequestment/IHistoryRequestment'
+
 import '../../modules/users/providers'
 
 container.registerSingleton<Imunicipe>(
@@ -71,6 +76,11 @@ container.registerSingleton<Irequestement>(
     "RequestmentRepository",
     RequestmentRepository
 )
+container.registerSingleton<TypeIrequestement>(
+    "TypeRequestmentRepository",
+    TypeRequestmentRepository
+)
+
 
 container.registerSingleton<IState>(
     "StateRepository",
@@ -111,6 +121,10 @@ container.registerSingleton<IPermission>(
     PermissionRepository
 )
 
+container.registerSingleton<IHistoryRequestement>(
+    "HisoryRequestmentRepository",
+    HistoryRequestmentRepository
+)
 
 
 

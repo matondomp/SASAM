@@ -29,17 +29,13 @@ export class RequestmentRepository implements Irequestement{
     }
     public async list(filter:string):Promise<Requestment[]>{
         let requestments:Requestment[]=[]
-        console.log('filter',filter)
-       if(filter){
-        console.log('filter1',filter)
-            requestments= await this.requestment.find({
-               description:Like(`%${filter}%`),
-               sla:Like(`%${filter}%`)
-           })
-           return requestments
-       }
-
-       requestments= await this.requestment.find()
+      
+       requestments= await this.requestment.find({
+           relations:[
+               'Estado',
+               'TipoSolicitacoes'
+            ]
+       })
 
        return requestments
     }

@@ -16,11 +16,13 @@ describe("CreateMunicipesService",()=>{
 
       it("should be able to create municipes",async()=>{
            const municipe=await createRequestmentService.execute({
-                  description:"luanda",
+                  name:"luanda",
                   estado_id:"1",
-                  sla:"1"
+                  numero_identificacao:'123',
+                  telefone:'925758037',
+                  tipo_solicitacao_id:'1'
             })
 
-            expect(municipe.description).toBe('luanda')
+            expect(municipe.name).toBe('luanda')
       })
 })

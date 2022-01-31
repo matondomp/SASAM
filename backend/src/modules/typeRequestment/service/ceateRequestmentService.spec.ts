@@ -1,5 +1,5 @@
 
-import { Irequestement } from '../Irequestment/Irequestment'
+import { TypeIrequestement } from '../Irequestment/Irequestment'
 import  { IFakeRequestmentRepository } from '../Irequestment/fake/fakeRequestmentRepository'
 import { CreateRequestmentService } from './createRequestmentService'
 
@@ -16,11 +16,10 @@ describe("CreateMunicipesService",()=>{
 
       it("should be able to create municipes",async()=>{
            const municipe=await createRequestmentService.execute({
-                  description:"luanda",
+                  name:"luanda",
                   estado_id:"1",
-                  sla:"1"
             })
 
-            expect(municipe.description).toBe('luanda')
+            expect(municipe.name).toBe('luanda')
       })
 })

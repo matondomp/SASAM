@@ -1,9 +1,9 @@
 import { getRepository, Like, Not, Repository } from 'typeorm'
 import { IrequestmentDTO } from '../../../dto/Irequestment'
-import { Irequestement  } from '../../../Irequestment/Irequestment'
+import { TypeIrequestement  } from '../../../Irequestment/Irequestment'
 import { Requestment } from '../entities/requestment'
 
-export class RequestmentRepository implements Irequestement{
+export class TypeRequestmentRepository implements TypeIrequestement{
     
     private requestment:Repository<Requestment>
     constructor(
@@ -29,18 +29,7 @@ export class RequestmentRepository implements Irequestement{
     }
     public async list(filter:string):Promise<Requestment[]>{
         let requestments:Requestment[]=[]
-        console.log('filter',filter)
-       if(filter){
-        console.log('filter1',filter)
-            requestments= await this.requestment.find({
-               description:Like(`%${filter}%`),
-               sla:Like(`%${filter}%`)
-           })
-           return requestments
-       }
-
-       requestments= await this.requestment.find()
-
+            requestments= await this.requestment.find()
        return requestments
     }
 

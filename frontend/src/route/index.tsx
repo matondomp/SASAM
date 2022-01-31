@@ -12,6 +12,7 @@ import { Municipality } from '../pages/municipality'
 import { Province } from '../pages/province'
 import { User } from '../pages/utilizador'
 import { Solicitacao } from '../pages/solicitacoes/index'
+import { TipoSolicitacao } from '../pages/tipo_solicitacoes'
 import { TipoMunicipe } from '../pages/tipoMunicipe'
 import { MaritalStatus } from '../pages/maritalStatus'
 
@@ -87,6 +88,13 @@ import { RoutePrivate } from './route'
                           <Solicitacao />
                        </RoutePrivate>
                       } />
+
+                        <Route path="/tipoSolicitacoes" element={
+                       <RoutePrivate isPrivate={true} >
+                          <TipoSolicitacao />
+                       </RoutePrivate>
+                      } />
+
                     <Route path="/prioridade" element={
                        <RoutePrivate isPrivate={true} >
                            <Priority />

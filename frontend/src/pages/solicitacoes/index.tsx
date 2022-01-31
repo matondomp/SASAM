@@ -47,19 +47,24 @@ import { Input } from './style'
 import { hendleDateTimeZone } from '../../prividers/timezone/timeZoneLocal';
 import { UploadFile } from 'antd/lib/upload/interface';
 
+import { Column as _Column } from '../../prividers/table/columns/solicitacoes-historico'
+
 const { Option } = Select;
 
 export const Solicitacao: FC = () => {
 
   const [form,setForm]=useState({
-    description:'',
-    sla:'',
-    estado_id:''
+    numero_identificacao:'',
+    name:'',
+    telefone:'',
+    tipo_solicitacao_id:''
   })
 
   const [name, setName] = useState('')
   const [isEdit,seIsEdit]=useState(false)
   const [solicitacoes,setSolicitacoes]=useState<any[]>([])
+  const [historico,setHistorico]=useState<any[]>([])
+  const [tipoSolicitacoes,setTipoSolicitacoes]=useState<any[]>([])
   const [id, setId] = useState('')
   const [estado, setEstado] = useState<any[]>([])
   const [provincia, setProvincia] = useState<any[]>([])
@@ -68,11 +73,8 @@ export const Solicitacao: FC = () => {
   const [identidade,setIdentidade]=useState<any[]>([])
   const toast = useToast()
   const { inputSearchValue } = UseSearchContext()
-  let formRef:any=useRef()
-  let descriptionRef:any=useRef() 
-  let slaRef:any=useRef() 
-  let estadoRef:any=useRef() 
-
+  const [visibleDoc, setVisibleDoc] = useState(false);
+  const [visibleIdentity, setVisibleIdentity] = useState(false);
   const [fileList, setFileList] = useState<UploadFile<any>[]>([
     {
       uid: '-1',
@@ -82,22 +84,15 @@ export const Solicitacao: FC = () => {
     }
   ]);
 
+ 
+let user:any=localStorage.getItem("@sasam-app:user")
+user=user && JSON.parse(user)
 
-
-function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
-        const {name,value}=event.target
-        setForm({
-          ...form,[name]:value
-        })
-    }
-    function henderSelectChanges(event:any) {
-      const {name,value}=event.target
-      /* setForm({
-        ...form,[name]:value
-      }) */
-  }
   useEffect(() => {
+
     getSolicitacoes()
+    getTypeSolicitacoes()
+    getIdentity('')
     getEstado()
   }, [inputSearchValue,name])
 
@@ -105,24 +100,29 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
 
   function initForm(item: any) {
         setForm({
-          description:'',
-          sla:'',
-          estado_id:''
+          numero_identificacao:'',
+          name:'',
+          telefone:'',
+          tipo_solicitacao_id:''
         })
-
+        getHistorico(solicitacoes[item.key].id)
         setId(solicitacoes[item.key].id)
 
         forms.setFieldsValue({
-          description:solicitacoes[item.key].description,
-          sla:solicitacoes[item.key].sla,
+          municipe:solicitacoes[item.key].name,
+          numero_identificacao:solicitacoes[item.key].numero_identificacao,
+          name:solicitacoes[item.key].name,
+          telefone:solicitacoes[item.key].telefone,
           estado_id:solicitacoes[item.key].estado_id,
+          tipo_solicitacao_id:solicitacoes[item.key].tipo_solicitacao_id
         });
 
         setForm(
           {
-            description:solicitacoes[item.key].description,
-            sla:solicitacoes[item.key].sla,
-            estado_id:solicitacoes[item.key].estado_id,
+            numero_identificacao:solicitacoes[item.key].numero_identificacao,
+            name:solicitacoes[item.key].name,
+            telefone:solicitacoes[item.key].telefone,
+            tipo_solicitacao_id:solicitacoes[item.key].tipo_solicitacao_id
           }
         )
 
@@ -130,17 +130,22 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
        console.log(form)
   }
 
+
   const menu = (id: string) => {
    
    return(
        <Menu onClick={handleMenuClick}>
           <Menu.Item key={id} onClick={(e) => { setVisible(true); initForm(e);seIsEdit(true) }}>Editar</Menu.Item>
-    
-        </Menu>
+          <Menu.Item key={id} onClick={(e) => {setVisibleDoc(true);initForm(e) }}>Histórico</Menu.Item>
+       </Menu>
       ) 
   };
 
-  
+  const _menu =(id:string)=> (
+    <Menu >
+     {/*  <Menu.Item key={id} onClick={(e)=>{setVisibleIdentity(true);}}>Editar</Menu.Item> */}
+    </Menu>
+  );
 
   const getEstado = useCallback(async () => {
     setEstado([])
@@ -175,8 +180,23 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
   const onChange = (fileList:any) => {
     setFileList(fileList.fileList);
   };
+
+  const onChanges = (value:any) => {
+       getIdentity(value)
+       console.log(identidade[0])
+      /*  for (const item of identidade) {
+ */
+          forms.setFieldsValue({
+            numero_identificacao:identidade[0].numero_identificacao,
+            name:identidade[0].name,
+            telefone:identidade[0].telefone,
+          });
+         
+      /*  } */
+
+  };
+
   function onSearch(val:any) {
-    getIdentity(val)
     console.log('search:', val);
   }
   const onPreview = async (file:any) => {
@@ -194,6 +214,58 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
     imgWindow?.document.write(image.outerHTML);
   };
 
+  const getTypeSolicitacoes = useCallback(async () => {
+    setTipoSolicitacoes([])
+   
+    const response = await api.post("/tipo-solicitacao/list", { filter: inputSearchValue })
+    const { data } = response
+
+    setTipoSolicitacoes(() => (data.map((item: any, i: number) => {
+          console.log(i)
+          return {
+            key: i,
+            id: item.id,
+            name: item?.name,
+            estado:item?.estado_id=='1'?'Activo':'Inactivo',
+            estado_id:item?.estado_id,
+            data: hendleDateTimeZone(item?.created_at),
+          }
+        }
+      )
+      )
+    )
+    setLoading(false)
+
+  }, [])
+
+  const getHistorico = useCallback(async (id) => {
+    setHistorico([])
+   
+    const response = await api.post("/historico/list/"+id, { filter: inputSearchValue })
+    const { data } = response
+
+    setHistorico(() => (data.map((item: any, i: number) => {
+          console.log(i)
+          return {
+            key: i,
+            id: item?.id,
+            name:item?.description,
+            numero_identificacao:item?.Solicitacoes?.numero_identificacao,
+            telefone:item?.Solicitacoes?.telefone,
+            tipo_solicitacao_id:item?.Solicitacoes?.id,
+            tipo_solicitacao:item?.Solicitacoes?.name,
+            estado_id:item?.Estado?.id,
+            estado:item?.Estado?.name,
+            data: hendleDateTimeZone(item?.created_at),
+          }
+        }
+      )
+      )
+    )
+    setLoading(false)
+
+  }, [])
+
   const getSolicitacoes = useCallback(async () => {
     setSolicitacoes([])
    
@@ -205,9 +277,13 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
           return {
             key: i,
             id: item.id,
-            description: item?.description,
-            estado_id:item?.estado_id,
-            sla: item?.sla,
+            name:item.name,
+            numero_identificacao:item.numero_identificacao,
+            telefone:item.telefone,
+            tipo_solicitacao_id:item?.TipoSolicitacoes?.id,
+            tipo_solicitacao:item?.TipoSolicitacoes?.name,
+            estado_id:item?.Estado?.id,
+            estado:item?.Estado?.name,
             data: hendleDateTimeZone(item?.created_at),
           }
         }
@@ -218,9 +294,10 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
 
   }, [])
 
+
   const getIdentity = useCallback(async (identidade:string) => {
    // setTypeMunicipe([])
-
+    console.log('searhing')
     const response = await api.post(`/identidade/listByIdentity`,{ filter:identidade})
     const { data } = response
 
@@ -230,12 +307,13 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
             key: i,
             id: item.id,
             numero_identificacao:item.numero_identificacao,
-            tipo_identificacao:item.tipo_identificacao,
+            tipo_solicitacao_id:item.tipo_solicitacao_id,
             data_emissao:item?.data_emissao && hendleDateTimeZone(item?.data_emissao),
             data_validade: item?.data_validade && hendleDateTimeZone(item?.data_validade ),
             estado_id:item?.estado_id,
+            telefone:item?.Municipe.telefone,
             estado:item?.estado_id=='1'?'Activo':'Inactivo',
-            name: item?.name,
+            name: item?.Municipe?.name,
             data: item?.created_at  && hendleDateTimeZone(item?.created_at),
           }
         }
@@ -246,7 +324,43 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
 
   }, [])
 
+  const _column = _Column(Dropdown, _menu)
   const column = Column(Dropdown, menu)
+
+  async function handleHistorico(data:any) {
+    console.log(user,'user from localstorege',user,data)
+    try {
+      await api.post("/historico",  
+         { 
+          description:'',
+          estado_id:data?.estado_id,
+          motivo:'',
+          user_id:user.id,
+          solicitacao_id:id
+        }
+      )
+
+      toast({
+        title: 'Atualizado com sucesso!',
+        description: "Estado criado com sucesso!",
+        status: 'success',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      })
+
+      getSolicitacoes()
+    } catch (error) {
+      toast({
+        title: 'Erro ao Atualizado distrito',
+        description: "Erro ao criar Estado, tente novamente!",
+        status: 'error',
+        position: 'top-right',
+        duration: 4000,
+        isClosable: true,
+      })
+    }
+  }
 
   async function handleUpdate(data:any) {
     console.log(data)
@@ -261,7 +375,7 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
         duration: 4000,
         isClosable: true,
       })
-
+      handleHistorico(data)
       getSolicitacoes()
     } catch (error) {
       toast({
@@ -307,6 +421,16 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
     }
   }
 
+  function clearInputs() {
+    forms.setFieldsValue({
+      municipe:'',
+      numero_identificacao:'',
+      name:'',
+      telefone:'',
+      tipo_solicitacao_id:'',
+      estado_id:''
+    });
+  }
   const { Option } = Select;
 
 
@@ -315,18 +439,55 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
       <section style={{marginBottom:'50px'}}>
         <h1>LISTA DE SOLICITAÇÕES</h1>
         <div>
-          <Button onClick={() => {setVisible(true);seIsEdit(false)}} type="primary" shape="round" icon={<PlusOutlined />} >Cadastrar</Button>
+          <Button onClick={() => {setVisible(true);seIsEdit(false);clearInputs()}} type="primary" shape="round" icon={<PlusOutlined />} >Cadastrar</Button>
           <Button type="primary" shape="round" icon={<DownloadOutlined />} >Exportar</Button>
         </div>
       </section>
 
       <Table
-        style={{ width: '90%' }}
+        style={{ width: '100%' }}
         columns={column}
         dataSource={solicitacoes}
         loading={loading}
         //  scroll={{ x: 1500, y: 300 }}
       />
+
+      <Modal
+        centered
+        visible={visibleDoc}
+        onOk={() => setVisibleDoc(false)}
+        onCancel={() => setVisibleDoc(false)}
+        width={1200}
+       >
+        <div>
+            <section
+               style={{
+                 display:'flex',
+                 justifyContent:'space-between',
+                 alignItems:'center',
+                 marginTop:'20px',
+                 fontSize:"30px",
+                 fontWeight:'bold',
+                 marginBottom:'50px'
+                }}>
+
+            <h1 style={{color:'#1d8efa'}}> Histórico</h1>
+           
+            <div>
+           
+              {/* <Button   onClick={() => {setVisibleIdentity(true);seIsEdit(false);clearInput()}} type="primary" shape="round" icon={<PlusOutlined />} >Cadastrar</Button>
+           */}  </div>
+          </section>
+          <hr />
+            <Table columns={_column} dataSource={historico}
+               scroll={{ x: 1500 }}
+               pagination={{ pageSize: 5 }}
+              // size="middle"
+             />
+        </div>
+       </Modal>
+
+    
 
       <Modal
         title="Registar"
@@ -337,13 +498,14 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
         okText="Regitrar"
         width={520}
       >
+
         <AdvancedSearchForm hendleSubmit={handleSubmit}  
            form={forms} >
           <Row gutter={24} style={{width:'100%'}}>
 
             <Col style={{width:'50%'}}>
             <Form.Item
-                  name="identificacao"
+                  name="municipe"
                   label="Municipe"
                   style={{width:'100%'}}
                   rules={[{ required: true, message: 'digite nº do  BI!' }]}
@@ -353,17 +515,17 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                 style={{ width: '100%' }}
                 placeholder="Select a person"
                 optionFilterProp="children"
-                onChange={onChange}
+                onChange={onChanges}
                 onSearch={onSearch}
                 filterOption={(input, option:any) =>
                   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
               >
                 {
-                  identidade.map((identity:any)=>(
-                    <Option value={identity.id} key={identity.id}>
+                  identidade.map(identity=>(
+                    <Option value={identity?.numero_identificacao} key={identity?.id}>
                       { 
-                        identity.name
+                        identity?.name
                       }
                     </Option>
                   )
@@ -374,9 +536,9 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
               </Form.Item>
 
               <Form.Item
-                name="description"
+                name="name"
                 label="Nome"
-                initialValue={form.description}
+                initialValue={form.name}
                 style={{width:'100%'}}
                 rules={[
                   {
@@ -385,8 +547,7 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                   },
                 ]}
               >
-                <Input style={{ width: '100%' }}  
-                onChange={henderInputChanges}  />
+                <Input style={{ width: '100%' }}   />
               </Form.Item>
 
               <Form.Item
@@ -395,7 +556,7 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                   style={{width:'100%'}}
                   rules={[{ required: true, message: 'digite nome da Estado!' }]}
                 >
-                  <Select defaultValue="Selectione" style={{ width: '100%', }} value={form.estado_id} onChange={henderSelectChanges}  >
+                  <Select defaultValue="Selectione" style={{ width: '100%', }}  >
                     <Option value="null" >Selectione</Option>
                     {
                       estado.map(estado=>(
@@ -411,9 +572,9 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
 
             <Col style={{width:'50%'}}>
               <Form.Item
-                name="identificacao"
+                name="numero_identificacao"
                 label="Identificação(BI)"
-                initialValue={form.sla}
+                initialValue={form.numero_identificacao}
                 style={{width:'100%'}}
                 rules={[
                   {
@@ -428,7 +589,7 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
               <Form.Item
                 name="telefone"
                 label="Telefone"
-                initialValue={form.sla}
+                initialValue={form.telefone}
                 style={{width:'100%'}}
                 rules={[
                   {
@@ -441,9 +602,9 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
               </Form.Item>
 
               <Form.Item
-                name="tipo_solicitacao"
+                name="tipo_solicitacao_id"
                 label="Tipo de solicitação"
-                initialValue={form.sla}
+                initialValue={form.tipo_solicitacao_id}
                 style={{width:'100%'}}
                 rules={[
                   {
@@ -452,7 +613,17 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                   },
                 ]}
               >
-                <Input style={{ width: '100%' }}    />
+                 <Select defaultValue="Selectione" style={{ width: '100%', }}  >
+                    <Option value="null" >Selectione</Option>
+                    {
+                      tipoSolicitacoes.map(item=>(
+                        <Option value={item.id} key={item.id}  >{item?.name}</Option>
+
+                       )
+                      )
+                    }
+
+                  </Select>
               </Form.Item>
             </Col>
 
@@ -462,7 +633,7 @@ function henderInputChanges(event: ChangeEvent<HTMLInputElement> ) {
                 <Form.Item
                 name="anexo"
                 label="Anexo"
-                initialValue={form.sla}
+                
                 style={{width:'100%'}}
                 rules={[
                   {

@@ -19,6 +19,8 @@ import { userRouter } from '../../../../modules/users/infra/http/route/route'
 import { perfilRouter } from '../../../../modules/perfil/infra/http/route/route'
 import { sessionUser } from '../../../../modules/users/infra/http/route/session.route'
 import { permissaoRouter } from '../../../../modules/permission/infra/http/route/route'
+import { TypeRequestRoute } from '../../../../modules/typeRequestment/infra/http/route/route'
+import { historyRequestRoute } from '../../../../modules/requestmentHistorico/infra/http/route/route'
 
 const route=Router()
 
@@ -29,6 +31,7 @@ route.use('/municipio',municipioRoute)
 route.use('/provincia',provinceRoute)
 route.use('/bairro',naibarroadRoute)
 
+route.use('/tipo-solicitacao',TypeRequestRoute)
 route.use('/solicitacao',requestRoute)
 
 route.use('/estado',stateRoute)
@@ -48,5 +51,6 @@ route.use('/perfil',perfilRouter)
 route.use('/login',sessionUser)
 
 route.use('/permissao',permissaoRouter)
+route.use('/historico',historyRequestRoute)
 
 export { route }

@@ -18,11 +18,14 @@ export class UpdateRequestmentService{
                   if(!item){
                       throw new Error("This state does not exist!")
                   }
-                  item.description=data.description
-                  item.sla=data.sla
+                  item.name=data.name
+                  item.numero_identificacao=data.numero_identificacao
+                  item.telefone=data.telefone
+                  item.tipo_solicitacao_id=data.tipo_solicitacao_id
                   item.estado_id=data.estado_id
                   await this.requestment.save(item)
             
                 return item
              }
+             
 }

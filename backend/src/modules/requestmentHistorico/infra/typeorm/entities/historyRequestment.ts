@@ -8,39 +8,44 @@ import {
     JoinColumn
   } from 'typeorm'
 
-  import { Requestment as TypeRequestment } from '../../../../typeRequestment/infra/typeorm/entities/requestment'
+  import { User } from '../../../../users/infra/typeorm/entities/user'
+  import { Requestment } from '../../../../requestment/infra/typeorm/entities/requestment'
   import { State } from '../../../../state/infra/typeorm/entities/state'
-@Entity("solicitacaos")
-export class Requestment{
+  
+@Entity("historico_solicitacoes")
+export class historyRequestment{
     
     @PrimaryGeneratedColumn('uuid')
     id!:string
 
     @Column()
-    name!:string
+    description!:string
 
     @Column()
     estado_id!:string
 
     @Column()
-    tipo_solicitacao_id!:string
+    user_id!:string
 
+    @Column()
+    solicitacao_id!:string
 
     @OneToOne(()=>State)
     @JoinColumn({ name:"estado_id" })
     Estado!:State
 
-    @OneToOne(()=>TypeRequestment)
-    @JoinColumn({ name:"tipo_solicitacao_id" })
-    TipoSolicitacoes!:TypeRequestment
 
+    @OneToOne(()=>Requestment)
+    @JoinColumn({ name:"solicitacao_id" })
+    Solicitacoes!:Requestment
+
+    @OneToOne(()=>User)
+    @JoinColumn({ name:"user_id" })
+    Users!:User
 
     @Column()
-    telefone!:string
+    motivo!:string
     
-    @Column()
-    numero_identificacao!:string
-
     @CreateDateColumn()
     created_at!:Date
 

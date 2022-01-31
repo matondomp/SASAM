@@ -1,5 +1,5 @@
 import { inject,injectable } from 'tsyringe'
-import { Irequestement } from '../Irequestment/Irequestment'
+import { TypeIrequestement } from '../Irequestment/Irequestment'
 import { IrequestmentDTO } from '../dto/Irequestment'
 import { Requestment } from '../infra/typeorm/entities/requestment'
 
@@ -8,8 +8,8 @@ import { Requestment } from '../infra/typeorm/entities/requestment'
 export class CreateRequestmentService{
     
       constructor(
-            @inject("RequestmentRepository")
-             private requestment:Irequestement
+            @inject("TypeRequestmentRepository")
+             private requestment:TypeIrequestement
             ){}
 
      public async execute(data:IrequestmentDTO):Promise<Requestment>{

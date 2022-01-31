@@ -16,7 +16,7 @@ export class CreateRequestmentService{
            
           const item= await this.requestment.create(data)
           if(!item){
-              throw new Error("it should not create Distrit")
+              throw new Error("it should not create solicitação")
           }
 
          return item
