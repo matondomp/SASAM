@@ -1,5 +1,7 @@
-import React from 'react'
-
+import React,{ useCallback } from 'react'
+import { RiSettings4Line } from 'react-icons/ri'
+import { GoRequestChanges } from 'react-icons/go'
+import { FaUsersCog } from 'react-icons/fa'
 
 import { Menu, Button, Layout } from 'antd';
 import {
@@ -11,7 +13,7 @@ import {
 } from '@ant-design/icons';
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Container,Layout as _Layout } from './style'
 
@@ -19,14 +21,20 @@ import { Container,Layout as _Layout } from './style'
 export const Aside:React.FC=()=>{
   
   const [menuChangeActive,setMenuChangeActive]=useState('')
-
+  let navigate = useNavigate();
   const { SubMenu } = Menu;
   
 
   const hendleChangeTitleActive=(value:string)=>{
+    //e.preventDefault()
      setMenuChangeActive(value)
   }
 
+
+const hendleNavegate=useCallback((value)=>{
+  // e.preventDefault()
+   navigate(value)
+},[])
 
   const [collapsed,setCollapsed]=useState<any>(false)
 
@@ -58,27 +66,25 @@ export const Aside:React.FC=()=>{
         > 
         {/* inlineCollapsed={collapsed} */}
 
-          <Menu.Item key="1" onClick={()=>hendleChangeTitleActive('negocio')} icon={<PieChartOutlined />}>
-            <Link to='/municipe'> Municipes</Link> 
+          <Menu.Item  key="1" onClick={(event)=>{ hendleChangeTitleActive('negocio');hendleNavegate('/municipe')}} icon={<FaUsersCog size={20} />}>
+             Municipes
           </Menu.Item>
-      {/*     <Menu.Item key="2" onClick={()=>hendleChangeTitleActive('2')} icon={<DesktopOutlined />}>
-            Documento Identificação
-          </Menu.Item> */}
-              <SubMenu key="negocio" title="Negocio"  icon={<DesktopOutlined />}>
-                    <Menu.Item key="negocio2" onClick={()=>hendleChangeTitleActive('negocio2')}>
-                        <Link to="/solicitacoes">Solicitações</Link>
+   
+              <SubMenu key="negocio" title="Negocio"  icon={<GoRequestChanges size={20} />}>
+                    <Menu.Item key="negocio2" onClick={()=>{hendleChangeTitleActive('negocio2')}}>
+                      Solicitações
                     </Menu.Item>
                     <Menu.Item key="negocio3" onClick={()=>hendleChangeTitleActive('negocio3')}>Histórico</Menu.Item>
             </SubMenu>
 
-          <SubMenu key="sub1" icon={<MailOutlined />} title="Configurações">
+          <SubMenu key="sub1" icon={<RiSettings4Line size={20}/>} title="Configurações">
 
            
 
              <SubMenu key="sub2" title="Empresa">
                 <SubMenu key="sub3" title="Utilizador">
                     <Menu.Item key="11" onClick={()=>hendleChangeTitleActive('11')}>
-                       <Link to='/user'>
+                       <Link  to='/user'>
                             Listagem
                         </Link>
                     </Menu.Item>

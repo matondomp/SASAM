@@ -49,7 +49,7 @@ export const AdvancedSearchForm:FC<Ifilds> = ({ hendleSubmit, children,ref,form 
     >
       <div>
      { children }
-      <Row>
+      <Row>{/* 
         <Col span={24} style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit">
             Resistrar
@@ -70,7 +70,7 @@ export const AdvancedSearchForm:FC<Ifilds> = ({ hendleSubmit, children,ref,form 
           >
           
           </a>
-        </Col>
+        </Col> */}
       </Row>
 
       </div>

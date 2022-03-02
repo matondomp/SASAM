@@ -217,7 +217,7 @@ export const Perfil: FC = () => {
         title="Registar"
         centered
         visible={visible}
-        onOk={() => setVisible(false)}
+        onOk={() =>{ handleSubmit(forms.getFieldsValue());setVisible(false)}}
         onCancel={() => setVisible(false)}
         width={400}
       >
@@ -245,7 +245,7 @@ export const Perfil: FC = () => {
                 <Form.Item
                   style={{ width: "100%" }}
                   name="estado_id"
-                  label="perfil"
+                  label="Estado"
                   rules={[{ required: true, message: 'digite nome da perfil!' }]}
                 >
                   <Select defaultValue="Selectione" style={{ width: 350 }}  >

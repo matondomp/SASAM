@@ -228,7 +228,7 @@ export const Municipality: FC = () => {
         title="Registar"
         centered
         visible={visible}
-        onOk={() => setVisible(false)}
+        onOk={() =>{ handleSubmit(forms.getFieldsValue());setVisible(false)}}
         onCancel={() => setVisible(false)}
         width={1000}
        >

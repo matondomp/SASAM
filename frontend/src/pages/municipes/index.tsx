@@ -109,7 +109,7 @@ export const Municipe: FC = () => {
      data_validade:identidade[item.key]?.data_validade, */
      estado_id: null,
     });
-
+ 
     forms.setFieldsValue({
       name: null,
        pai: null,
@@ -328,6 +328,7 @@ export const Municipe: FC = () => {
   }
 
   async function  handleSubmit(data: any) {
+    console.log(data)
    console.log("ola identidade")
     if(isEdit){
       let url ="/municipe/"
@@ -480,7 +481,7 @@ export const Municipe: FC = () => {
         title="Registar Identidade"
         
         visible={visibleIdentity}
-        onOk={() => setVisibleIdentity(false)}
+        onOk={() =>{ handleSubmitIdentidade(_forms.getFieldsValue());setVisibleIdentity(false)}}
         onCancel={() => setVisibleIdentity(false)}
         width={500}
        >
@@ -578,7 +579,7 @@ export const Municipe: FC = () => {
         title="Registar"
         centered
         visible={visible}
-        onOk={() => setVisible(false)}
+         onOk={() => {handleSubmit(forms.getFieldsValue());setVisible(false)}}
         onCancel={() => setVisible(false)}
         width={1000}
        >
