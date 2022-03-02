@@ -11,8 +11,8 @@ export const Sider=styled(_Sider)`
       height: 100% !important;
       margi:0 auto !important;
       /* max-width:500px !important;
-      min-width:300px !important; */
-      background-color:#001529 !important;
+      min-width:300px !important;
+      background-color:#001529 !important; */
 `
 export const Container=styled(_Layout)`
     margin: 0;

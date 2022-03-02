@@ -210,16 +210,17 @@ export const TipoMunicipe: FC = () => {
         visible={visible}
         onOk={() =>{ handleSubmit(forms.getFieldsValue());setVisible(false)}}
         onCancel={() => setVisible(false)}
-        width={400}
+        width={500}
       >
         <AdvancedSearchForm hendleSubmit={handleSubmit} form={forms}>
-          <Row gutter={1}>
+          <Row gutter={24}>
 
 
-            <Col>
+            <Col style={{ width: '100%' }}>
               <Form.Item
                 name="name"
                 label="Nome"
+                style={{ width: '100%' }}
                 rules={[
                   {
                     required: true,
@@ -231,13 +232,14 @@ export const TipoMunicipe: FC = () => {
               </Form.Item>
             </Col>
 
-            <Col>
+            <Col style={{ width: '100%' }}>
                 <Form.Item
+                style={{ width: '100%' }}
                   name="estado_id"
                   label="Estado"
                   rules={[{ required: true, message: 'digite nome da Estado!' }]}
                 >
-                  <Select defaultValue="Selectione" style={{ width: 200, }}  >
+                  <Select  defaultValue="Selectione" style={{ width: '100%', }}  >
                     <Option value="null" >Selectione</Option>
                     <Option value="1" >Activo</Option>
                     <Option value="0" >Inactivo</Option>

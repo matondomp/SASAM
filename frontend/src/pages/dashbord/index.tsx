@@ -22,9 +22,9 @@ export const DashBord: FC = ({ children }) => {
 
             <Sider className="site-layout-background"
                 style={{
-                    maxWidth: '600px !important',
-                    width: '600px !important',
-                    minWidth: '600px !important'
+                   // maxWidth: '600px !important',
+                   // width: '600px !important',
+                   // minWidth: '600px !important'
                 }}  >
                 <Aside />
             </Sider>
