@@ -287,7 +287,7 @@ export const Municipe: FC = () => {
           bairro_id: item?.bairro?.id,
           tipo_municipe: item?.tipeMunicipio?.name,
           tipo_municipe_id:item?.tipeMunicipio?.id,
-          genero_id: item?.genero_id=='M'?'MASCULINO':'FEMENINO',
+          genero_id: item?.genero_id,
           estado_cil_id: item?.estadoCivil?.id,
           estado_civil: item?.estadoCivil?.name,
           email:item?.email,
@@ -303,7 +303,7 @@ export const Municipe: FC = () => {
   async function handleUpdate(url:string,data:any) {
     console.log(id)
     try {
-      await api.put(`${url}${id}`, {...data,municipe_id:municipeId})
+      await api.put(`${url}${id}`, {...data,municipe_id:municipeId, user_id: user?.id})
 
       toast({
         title: 'Atualizado com sucesso!',
@@ -336,9 +336,9 @@ export const Municipe: FC = () => {
       handleUpdate(url,data)
        return
     }
-
+   console.log('user',user)
     try {
-      const response=await api.post("/municipe",data)
+      const response=await api.post("/municipe",{...data, user_id: user?.id})
 
       message.success("Cadastrado com sucesso !")
       toast({
@@ -703,7 +703,7 @@ export const Municipe: FC = () => {
                 </Form.Item>
               </Col>
 
-             <Col>
+           {/*   <Col>
                 <Form.Item
                   name="user_id"
                   label="User"
@@ -711,7 +711,7 @@ export const Municipe: FC = () => {
                 >
                   <Input />
                 </Form.Item>
-              </Col>
+              </Col> */}
 
               <Col>
                 <Form.Item
@@ -771,9 +771,9 @@ export const Municipe: FC = () => {
                   rules={[{ required: true, message: 'Seleccione Tipo de Municipe!' }]}
                 >
                   <Select defaultValue="null" style={{ width: 200, }} >
-                  <Option value="null" >Selectione</Option>
-                    <Option value="M"  >Masculino</Option>
-                    <Option value="F" >Femenino</Option>
+                  <Option value="1" >Selectione</Option>
+                    <Option value="1"  >Masculino</Option>
+                    <Option value="0" >Femenino</Option>
 
                   </Select>
                 </Form.Item>
