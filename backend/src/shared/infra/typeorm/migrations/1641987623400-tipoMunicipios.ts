@@ -8,10 +8,10 @@ export class tipoMunicipios1641987623400 implements MigrationInterface {
             columns:[
                 {
                     name: "id",
-                    type: "uuid",
-                    isPrimary: true,
-                    generationStrategy: "uuid",
-                    default: "uuid_generate_v4()"
+                    type: "integer",
+                    isPrimary:true,
+                    isGenerated:true,
+                    generationStrategy:'increment'
                 },
                 {
                     name: "name",

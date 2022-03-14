@@ -8,10 +8,10 @@ export class municipios1640707291413 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()"
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "name",
@@ -20,13 +20,13 @@ export class municipios1640707291413 implements MigrationInterface {
                     },
                     {
                         name: "provincia_id",
-                        type: "uuid",
+                        type: "int",
                         isUnique: false
                     },
                     {
                         name: "estado_id",
-                        type: "uuid",
-                        default: "uuid_generate_v4()",
+                        type: "int",
+                     //   default: "uuid_generate_v4()",
                         isUnique: false
                     },
                     {
@@ -48,7 +48,7 @@ export class municipios1640707291413 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        //await queryRunner.dropTable("municipios")
+        await queryRunner.dropTable("municipios")
     }
 
 }

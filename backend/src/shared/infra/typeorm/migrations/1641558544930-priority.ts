@@ -9,10 +9,10 @@ export class priority1641558544930 implements MigrationInterface {
                 columns:[
                    {
                      name:"id",
-                     type:"uuid",
+                     type: "integer",
                      isPrimary:true,
-                     generationStrategy:"uuid",
-                     default:"uuid_generate_v4()"
+                     isGenerated:true,
+                     generationStrategy:'increment'
                    },
                    {
                     name:"description",
@@ -26,7 +26,7 @@ export class priority1641558544930 implements MigrationInterface {
                    },
                    {
                     name:"estado_id",
-                    type:"uuid",
+                    type:"integer",
                     isUnique:false
                    },
                    

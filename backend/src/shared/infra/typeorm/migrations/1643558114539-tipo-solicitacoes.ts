@@ -12,10 +12,10 @@ export class tipoSolicitacoes1643558114539 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()"
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "name",
@@ -48,7 +48,7 @@ export class tipoSolicitacoes1643558114539 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-         await queryRunner.dropTable("tipo_solicitacoes")
+         //await queryRunner.dropTable("tipo_solicitacoes")
     }
 
 }

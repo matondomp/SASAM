@@ -10,15 +10,15 @@ export class identidades1642002742186 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()"
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "municipe_id",
                         isNullable:true,
-                        type: "uuid",
+                        type: "integer",
                         isUnique: false
                     },
                     {

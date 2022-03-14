@@ -9,10 +9,10 @@ export class estadoCivil1641987645380 implements MigrationInterface {
             columns:[
                 {
                     name: "id",
-                    type: "uuid",
-                    isPrimary: true,
-                    generationStrategy: "uuid",
-                    default: "uuid_generate_v4()"
+                    type: "integer",
+                    isPrimary:true,
+                    isGenerated:true,
+                    generationStrategy:'increment'
                 },
                 {
                     name: "name",

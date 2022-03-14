@@ -5,13 +5,13 @@ export class alterMunicipe1641995197898 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.changeColumn("municipes", new TableColumn({
             name: "tipo_municipe_id",
-            type: "varchar",
+            type: "integer",
             isNullable: true,
             isUnique: false
         }),
             new TableColumn({
                 name: "tipo_municipe_id",
-                type: "uuid",
+                type: "integer",
                 isNullable:true,
                 isUnique: false
             })
@@ -30,13 +30,13 @@ export class alterMunicipe1641995197898 implements MigrationInterface {
 
         await queryRunner.changeColumn("municipes", new TableColumn({
             name: "estado_cil_id",
-            type: "varchar",
+            type: "integer",
             isNullable: true,
             isUnique: false
         }),
             new TableColumn({
                 name: "estado_cil_id",
-                type: "uuid",
+                type: "integer",
                 isNullable:true,
                 isUnique: false
             })
@@ -52,7 +52,7 @@ export class alterMunicipe1641995197898 implements MigrationInterface {
                 onUpdate: "CASCADE"
             })
         )
-
+/* 
         await queryRunner.changeColumn("municipes", new TableColumn({
             name: "bairro_id",
             type: "varchar",
@@ -61,12 +61,12 @@ export class alterMunicipe1641995197898 implements MigrationInterface {
         }),
             new TableColumn({
                 name: "bairro_id",
-                type: "uuid",
+                type: "integer",
                 isNullable:true,
                 isUnique: false
             })
 
-        )
+        ) */
         await queryRunner.createForeignKey("municipes",
             new TableForeignKey({
                 name: "bairroMunicipeForeignKey",

@@ -15,7 +15,7 @@ export class solicitacoes1643562502525 implements MigrationInterface {
            new TableColumn(
             {
                 name: "tipo_solicitacao_id",
-                type: "uuid",
+                type: "integer",
                 isUnique: false,
                 isNullable:true
             },

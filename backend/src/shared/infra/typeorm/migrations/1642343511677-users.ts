@@ -23,7 +23,7 @@ export class users1642343511677 implements MigrationInterface {
  
      public async down(queryRunner: QueryRunner): Promise<void> {
            await queryRunner.dropColumn('users','telefone')
-           await queryRunner.dropForeignKey("users","perfil_id")
+           //await queryRunner.dropForeignKey("users","perfil_id")
      }
 
 }

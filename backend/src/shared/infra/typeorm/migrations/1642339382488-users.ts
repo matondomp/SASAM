@@ -14,10 +14,10 @@ export class users1642337751807 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()"
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "name",
@@ -44,7 +44,7 @@ export class users1642337751807 implements MigrationInterface {
                     },
                     {
                         name: "perfil_id",
-                        type: "uuid",
+                        type: "integer",
                         isUnique: false
                     },
                     {

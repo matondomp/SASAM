@@ -9,10 +9,10 @@ export class provinces1640756452572 implements MigrationInterface {
                 columns:[
                    {
                      name:"id",
-                     type:"uuid",
+                     type: "integer",
                      isPrimary:true,
-                     generationStrategy:"uuid",
-                     default:"uuid_generate_v4()"
+                     isGenerated:true,
+                     generationStrategy:'increment'
                    },
                    {
                     name:"name",
@@ -22,8 +22,8 @@ export class provinces1640756452572 implements MigrationInterface {
                    
                    {
                       name:"estado_id",
-                      type:"uuid",
-                      default: "uuid_generate_v4()",
+                      type:"integer",
+                      //default: "uuid_generate_v4()",
                       isUnique:false
                    },
                     {

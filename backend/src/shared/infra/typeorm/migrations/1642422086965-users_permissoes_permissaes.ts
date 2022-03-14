@@ -9,12 +9,12 @@ export class usersPermissoesPermissaes1642422086965 implements MigrationInterfac
             columns:[
                 {
                     name: "permissaeId",
-                    type: "uuid",
+                    type: "integer",
                     isUnique: false
                 },
                 {
                     name: "userId",
-                    type: "uuid",
+                    type: "integer",
                     isUnique: false
                 }
             ]

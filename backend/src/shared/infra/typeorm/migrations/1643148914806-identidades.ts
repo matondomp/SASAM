@@ -15,7 +15,7 @@ export class identidades1643148914806 implements MigrationInterface {
 
         await queryRunner.addColumn('identidades', new TableColumn({
             name: "userId",
-            type: "uuid",
+            type: "integer",
             isUnique: false,
             isNullable:true
         }))

@@ -7,14 +7,14 @@ export class users1643355049658 implements MigrationInterface {
         await queryRunner.changeColumn('users',new TableColumn(
             {
                 name: "perfil_id",
-                type: "uuid",
+                type: "integer",
                 isUnique: false
             }
            ),
            new TableColumn(
             {
                 name: "perfil_id",
-                type: "uuid",
+                type: "integer",
                 isUnique: false,
                 isNullable:true
             },

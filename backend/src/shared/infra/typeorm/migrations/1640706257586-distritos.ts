@@ -9,10 +9,10 @@ export class distritos1640706257586 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()"
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "name",
@@ -21,21 +21,21 @@ export class distritos1640706257586 implements MigrationInterface {
                     },
                     {
                         name: "municipio_id",
-                        type: "uuid",
+                        type: "integer",
                         isUnique: false,
-                        default: "uuid_generate_v4()"
+                       // default: "uuid_generate_v4()"
                     },
                     {
                         name: "provincia_id",
-                        type: "uuid",
+                        type: "integer",
                         isUnique: false,
-                        default: "uuid_generate_v4()"
+                       // default: "uuid_generate_v4()"
                     },
                     {
                         name: "estado_id",
-                        type: "uuid",
+                        type: "integer",
                         isUnique: false,
-                        default: "uuid_generate_v4()"
+                        //default: "uuid_generate_v4()"
                     },
                     {
                         name: "created_at",

@@ -54,7 +54,7 @@ export class solicitacoes1643560551919 implements MigrationInterface {
 
     
     public async down(queryRunner: QueryRunner): Promise<void> {
-       await queryRunner.dropColumn('solicitacaos','tipo_solicitacao')
+     //  await queryRunner.dropColumn('solicitacaos','tipo_solicitacao')
        await queryRunner.dropColumn('solicitacaos','telefone')
        await queryRunner.dropColumn('solicitacaos','numero_identificacao')
     }

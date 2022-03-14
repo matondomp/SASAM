@@ -38,10 +38,10 @@ export class municipes1640614909158 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()"
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "name",
@@ -55,8 +55,8 @@ export class municipes1640614909158 implements MigrationInterface {
                     },
                     {
                         name: "estado_id",
-                        type: "varchar",
-                        default: true,
+                        type: "integer",
+                        default: 1,
                         isUnique: false
                     },
                     {
@@ -90,35 +90,35 @@ export class municipes1640614909158 implements MigrationInterface {
                     },
                     {
                         name: "bairro_id",
-                        type: "varchar",
+                        type: "integer",
                         isNullable: true,
                         isUnique: false
 
                     },
                     {
                         name: "user_id",
-                        type: "varchar",
+                        type: "integer",
                         isNullable: false,
                         isUnique: false
 
                     },
                     {
                         name: "tipo_municipe_id",
-                        type: "varchar",
+                        type: "integer",
                         isNullable: true,
                         isUnique: false
 
                     },
                     {
                         name: "genero_id",
-                        type: "varchar",
+                        type: "integer",
                         isNullable: true,
                         isUnique: false
 
                     },
                     {
                         name: "estado_cil_id",
-                        type: "varchar",
+                        type: "integer",
                         isNullable: true,
                         isUnique: false
 

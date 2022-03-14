@@ -8,10 +8,10 @@ export class historicoSolicitacoes1643587303344 implements MigrationInterface {
             columns:[
                 {
                     name: "id",
-                    type: "uuid",
-                    isPrimary: true,
-                    generationStrategy: "uuid",
-                    default: "uuid_generate_v4()"
+                    type: "integer",
+                    isPrimary:true,
+                    isGenerated:true,
+                    generationStrategy:'increment'
                 },
                 {
                     name: "description",
@@ -27,19 +27,19 @@ export class historicoSolicitacoes1643587303344 implements MigrationInterface {
                 },
                 {
                     name: "user_id",
-                    type: "uuid",
+                    type: "integer",
                     isNullable:true,
                     isUnique: false
                 },
                 {
                     name: "solicitacao_id",
-                    type: "uuid",
+                    type: "integer",
                     isNullable:true,
                     isUnique: false
                 },
                 {
                     name: "estado_id",
-                    type: "uuid",
+                    type: "integer",
                     isNullable:false,
                     isUnique: false
                 },

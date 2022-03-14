@@ -9,10 +9,10 @@ export class naibarroad1640756438552 implements MigrationInterface {
                 columns: [
                     {
                         name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()"
+                        type: "integer",
+                        isPrimary:true,
+                        isGenerated:true,
+                        generationStrategy:'increment'
                     },
                     {
                         name: "name",
@@ -21,26 +21,26 @@ export class naibarroad1640756438552 implements MigrationInterface {
                     },
                     {
                         name: "distrito_id",
-                        default: "uuid_generate_v4()",
-                        type: "uuid",
+                       /// default: "uuid_generate_v4()",
+                        type: "integer",
                         isUnique: false
                     },
                     {
                         name: "municipio_id",
-                        type: "uuid",
-                        default: "uuid_generate_v4()",
+                        type: "integer",
+                       // default: "uuid_generate_v4()",
                         isUnique: false
                     },
                     {
                         name: "provincia_id",
-                        type: "uuid",
-                        default: "uuid_generate_v4()",
+                        type: "integer",
+                        //default: "uuid_generate_v4()",
                         isUnique: false
                     },
                     {
                         name: "estado_id",
-                        type: "uuid",
-                        default: "uuid_generate_v4()",
+                        type: "integer",
+                        //default: "uuid_generate_v4()",
                         isUnique: false
                     },
                     {

@@ -2,7 +2,7 @@ import {MigrationInterface, QueryRunner, TableForeignKey} from "typeorm";
 
 export class municipios1641487066321 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
-     
+     /* 
         await queryRunner.createForeignKey("municipios",
             new TableForeignKey({
                 name: "provinceForeignKey",
@@ -22,7 +22,7 @@ export class municipios1641487066321 implements MigrationInterface {
                 onDelete: "SET NULL",
                 onUpdate: "CASCADE"
             })
-        )
+        ) */
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

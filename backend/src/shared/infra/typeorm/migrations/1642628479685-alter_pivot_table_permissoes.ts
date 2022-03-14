@@ -6,10 +6,10 @@ export class alterPivotTablePermissoes1642628479685 implements MigrationInterfac
         await queryRunner.addColumn("users_permission_permissaes",new TableColumn(
             {
                 name: "id",
-                type: "uuid",
-                isPrimary: true,
-                generationStrategy: "uuid",
-                default: "uuid_generate_v4()"
+                type: "integer",
+                isPrimary:true,
+                isGenerated:true,
+                generationStrategy:'increment'
             },
             
         ))

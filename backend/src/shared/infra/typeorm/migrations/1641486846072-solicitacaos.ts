@@ -9,10 +9,10 @@ export class solicitacaos1641481941699 implements MigrationInterface {
                 columns:[
                    {
                      name:"id",
-                     type:"uuid",
+                     type: "integer",
                      isPrimary:true,
-                     generationStrategy:"uuid",
-                     default:"uuid_generate_v4()"
+                     isGenerated:true,
+                     generationStrategy:'increment'
                    },
                    {
                     name:"description",
@@ -21,8 +21,8 @@ export class solicitacaos1641481941699 implements MigrationInterface {
                    },
                    {
                     name:"estado_id",
-                    type:"uuid",
-                    default: "uuid_generate_v4()",
+                    type:"integer",
+                    //default: "uuid_generate_v4()",
                     isUnique:false
                    },
                     {

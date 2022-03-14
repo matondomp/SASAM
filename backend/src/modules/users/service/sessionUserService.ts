@@ -42,7 +42,7 @@ class SessionUserService{
              password,
              String(user.password)
              )
-
+       
         if(!comparedPassword){
             throw new AppError("Incorrect email/password",401)
         }
@@ -53,10 +53,10 @@ class SessionUserService{
          const { secrat, expiresIn } = jwt
 
          const token=sign( {} ,secrat,{ 
-             subject:user.id,
+             subject:String(user.id),
              expiresIn:expiresIn
          })
-
+        
         return{ user, token }
    }
 }
