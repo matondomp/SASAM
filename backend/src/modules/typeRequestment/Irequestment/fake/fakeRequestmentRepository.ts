@@ -1,16 +1,16 @@
 import { IrequestmentDTO } from '../../dto/Irequestment';
-import { Irequestement } from '../Irequestment'
-import { Requestment } from '../../infra/typeorm/entities/requestment'
+import { TypeIrequestement } from '../Irequestment'
+import { TypeRequestment } from '../../infra/typeorm/entities/requestment'
 
-export class IFakeRequestmentRepository implements Irequestement{
+export class IFakeRequestmentRepository implements TypeIrequestement{
     listRequestment:any=[]
-    public async create(data:IrequestmentDTO):Promise<Requestment>{
-        const requestment=new Requestment()
+    public async create(data:IrequestmentDTO):Promise<TypeRequestment>{
+        const requestment=new TypeRequestment()
         Object.assign(requestment,{...data})
         this.listRequestment.push(requestment)
         return requestment
     }
-    public async findById(id:string):Promise<Requestment | undefined>{
+    public async findById(id:string):Promise<TypeRequestment | undefined>{
        const requestment=this.listRequestment.find((item:any)=>item.id==id)
        return requestment
     }
@@ -19,11 +19,11 @@ export class IFakeRequestmentRepository implements Irequestement{
         this.listRequestment[index]=data
         return this.listRequestment[index]
     }
-    public async list():Promise<Requestment[]>{
+    public async list():Promise<TypeRequestment[]>{
         return this.listRequestment
     }
 
-    public async save(data:Requestment):Promise<Requestment>{
+    public async save(data:TypeRequestment):Promise<TypeRequestment>{
 
         this.listRequestment.push(data)
         

@@ -7,7 +7,7 @@ import {
   } from 'typeorm'
 
 @Entity("tipo_solicitacoes")
-export class Requestment{
+export class TypeRequestment{
     
     @PrimaryGeneratedColumn('uuid')
     id!:string

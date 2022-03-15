@@ -183,20 +183,17 @@ user=user && JSON.parse(user)
 
   const onChanges = (value:any) => {
        getIdentity(value)
-       console.log(identidade[0])
-      /*  for (const item of identidade) {
- */
-          forms.setFieldsValue({
+       forms.setFieldsValue({
             numero_identificacao:identidade[0].numero_identificacao,
             name:identidade[0].name,
             telefone:identidade[0].telefone,
           });
          
-      /*  } */
-
   };
 
   function onSearch(val:any) {
+    clearInputs()
+    //getIdentity('')
     console.log('search:', val);
   }
   const onPreview = async (file:any) => {
@@ -300,7 +297,7 @@ user=user && JSON.parse(user)
     console.log('searhing')
     const response = await api.post(`/identidade/listByIdentity`,{ filter:identidade})
     const { data } = response
-
+    console.log(data)
     setIdentidade(() => (data.map((item: any, i: number) => {
           console.log(i)
           return {
@@ -376,6 +373,7 @@ user=user && JSON.parse(user)
         isClosable: true,
       })
       handleHistorico(data)
+      getIdentity('')
       getSolicitacoes()
     } catch (error) {
       toast({
@@ -409,6 +407,7 @@ user=user && JSON.parse(user)
       })
 
       getSolicitacoes()
+      clearInputs()
     } catch (error) {
       toast({
         title: 'Erro ao criar distrito',
@@ -422,6 +421,7 @@ user=user && JSON.parse(user)
   }
 
   function clearInputs() {
+    getIdentity('')
     forms.setFieldsValue({
       municipe:'',
       numero_identificacao:'',
@@ -494,7 +494,7 @@ user=user && JSON.parse(user)
         centered
         visible={visible}
         onOk={() =>{ handleSubmit(forms.getFieldsValue());setVisible(false)}}
-        onCancel={() => setVisible(false)}
+        onCancel={() => { setVisible(false); clearInputs() }}
         okText="Regitrar"
         width={520}
       >

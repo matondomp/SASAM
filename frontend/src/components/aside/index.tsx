@@ -71,7 +71,7 @@ const hendleNavegate=useCallback((value)=>{
           </Menu.Item>
    
               <SubMenu key="negocio" title="Negocio"  icon={<GoRequestChanges size={20} />}>
-                    <Menu.Item key="negocio2" onClick={()=>{hendleChangeTitleActive('negocio2')}}>
+                    <Menu.Item key="negocio2" onClick={()=>{hendleChangeTitleActive('negocio2');hendleNavegate('/solicitacoes')}}>
                       Solicitações
                     </Menu.Item>
                     <Menu.Item key="negocio3" onClick={()=>hendleChangeTitleActive('negocio3')}>Histórico</Menu.Item>

@@ -1,10 +1,10 @@
-import { IrequestmentDTO } from '../dto/IPriority'
-import { Requestment } from '../infra/typeorm/entities/priority'
+import { IPriorityDTO } from '../dto/IPriority'
+import { Priority } from '../infra/typeorm/entities/priority'
 
 export interface Irequestement{
-    create(date:IrequestmentDTO):Promise<Requestment>
-    findById(id:string):Promise<Requestment | undefined>
-    update(id:string,date:IrequestmentDTO):Promise<void>
-    list(filter:string):Promise<Requestment[]>
-    save(date:Requestment):Promise<Requestment>
+    create(date:IPriorityDTO):Promise<Priority>
+    findById(id:string):Promise<Priority | undefined>
+    update(id:string,date:IPriorityDTO):Promise<void>
+    list(filter:string):Promise<Priority[]>
+    save(date:Priority):Promise<Priority>
 }

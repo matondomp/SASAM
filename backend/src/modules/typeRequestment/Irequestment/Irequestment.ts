@@ -1,10 +1,10 @@
 import { IrequestmentDTO } from '../dto/Irequestment'
-import { Requestment } from '../infra/typeorm/entities/requestment'
+import { TypeRequestment } from '../infra/typeorm/entities/requestment'
 
 export interface TypeIrequestement{
-    create(date:IrequestmentDTO):Promise<Requestment>
-    findById(id:string):Promise<Requestment | undefined>
+    create(date:IrequestmentDTO):Promise<TypeRequestment>
+    findById(id:string):Promise<TypeRequestment | undefined>
     update(id:string,date:IrequestmentDTO):Promise<void>
-    list(filter:string):Promise<Requestment[]>
-    save(date:Requestment):Promise<Requestment>
+    list(filter:string):Promise<TypeRequestment[]>
+    save(date:TypeRequestment):Promise<TypeRequestment>
 }

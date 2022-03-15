@@ -29,6 +29,7 @@ export class RequestController{
         tipo_solicitacao_id
        } = request.body
        console.log(request.body)
+       
       const requestment= container.resolve(CreateRequestmentService)
      
       const data=await requestment.execute({

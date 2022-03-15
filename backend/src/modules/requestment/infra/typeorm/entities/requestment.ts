@@ -8,7 +8,7 @@ import {
     JoinColumn
   } from 'typeorm'
 
-  import { Requestment as TypeRequestment } from '../../../../typeRequestment/infra/typeorm/entities/requestment'
+  import { TypeRequestment } from '../../../../typeRequestment/infra/typeorm/entities/requestment'
   import { State } from '../../../../state/infra/typeorm/entities/state'
 @Entity("solicitacaos")
 export class Requestment{
@@ -20,7 +20,7 @@ export class Requestment{
     name!:string
 
     @Column()
-    estado_id!:string
+    estado_id!:number
 
     @Column()
     tipo_solicitacao_id!:string

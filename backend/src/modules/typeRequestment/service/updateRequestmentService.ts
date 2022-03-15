@@ -1,7 +1,7 @@
 import { inject,injectable } from 'tsyringe'
 import { TypeIrequestement } from '../Irequestment/Irequestment'
 import { IrequestmentDTO } from '../dto/Irequestment'
-import { Requestment } from '../infra/typeorm/entities/requestment'
+import { TypeRequestment } from '../infra/typeorm/entities/requestment'
 
 
 @injectable()
@@ -12,7 +12,7 @@ export class UpdateRequestmentService{
              private requestment:TypeIrequestement
             ){}
 
-            public async execute(id:string,data:IrequestmentDTO):Promise<Requestment>{
+            public async execute(id:string,data:IrequestmentDTO):Promise<TypeRequestment>{
         
                   const item= await this.requestment.findById(id)
                   if(!item){

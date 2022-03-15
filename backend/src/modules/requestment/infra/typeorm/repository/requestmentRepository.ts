@@ -15,7 +15,9 @@ export class RequestmentRepository implements Irequestement{
     public async create(data:IrequestmentDTO):Promise<Requestment>{
         
        const requestments= this.requestment.create({...data })
+       console.log("inside repository",requestments)
        await this.requestment.save(requestments)
+       console.log("inside repository 1",requestments)
 
        return requestments
     }
