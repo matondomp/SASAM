@@ -74,8 +74,8 @@ const hendleNavegate=useCallback((value)=>{
                     <Menu.Item key="negocio2" onClick={()=>{hendleChangeTitleActive('negocio2');hendleNavegate('/solicitacoes')}}>
                       Solicitações
                     </Menu.Item>
-                    <Menu.Item key="negocio3" onClick={()=>hendleChangeTitleActive('negocio3')}>Histórico</Menu.Item>
-            </SubMenu>
+                    {/* <Menu.Item key="negocio3" onClick={()=>hendleChangeTitleActive('negocio3')}>Histórico</Menu.Item>
+           */}  </SubMenu>
 
           <SubMenu key="sub1" icon={<RiSettings4Line size={20}/>} title="Configurações">
 
